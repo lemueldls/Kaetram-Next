@@ -1,4 +1,4 @@
-Config = {};
+const Config: { [key: string]: any } = {};
 
 // Connectivity/Hosting Configuration
 Config.name = 'Kaetram';
@@ -16,8 +16,8 @@ Config.apiPort = 9002;
 Config.database = 'mongodb'; // Used for multiple database support
 Config.offlineMode = false; // Skip database checking upon login
 
-Config.mongoHost = "127.0.0.1";
-Config.mongoPort = "27017";
+Config.mongoHost = '127.0.0.1';
+Config.mongoPort = '27017';
 Config.mongoUser = 'admin';
 Config.mongoPassword = 'password';
 Config.mongoDatabase = 'database';

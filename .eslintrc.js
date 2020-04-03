@@ -90,7 +90,6 @@ module.exports = {
     ignorePatterns: [
         'node_modules/',
         '*.json',
-        '*.json-dist',
         './client/lib/',
         './client/**/lib/',
     ],
