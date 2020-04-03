@@ -13,8 +13,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    docker:
-      - image: circleci/node:1.1.6
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
