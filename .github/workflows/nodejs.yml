@@ -20,10 +20,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        steps:
-        - run: npm install
-        - run: npm run rename
-        - run: npm run build
-        - run: npm test
+    - run: npm install
+    - run: npm run rename
+    - run: npm run build
+    - run: npm test
       env:
         CI: true
