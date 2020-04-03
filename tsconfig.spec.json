@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "typeRoots": ["./client/typings", "./node_modules/@types"],
+    "types": ["jest", "node"]
+  }
+}
