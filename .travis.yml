@@ -2,7 +2,7 @@ language: node_js
 
 node_js:
   - 'node'
-  - 1'0'
+  - '10'
   - '9'
   - '8'
   - '7'

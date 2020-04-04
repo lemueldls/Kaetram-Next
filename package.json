@@ -20,7 +20,7 @@
     "lint": "eslint \"./**/*.{ts,tsx}\"",
     "doc": "cd server && typedoc --out ../docs ../server",
     "map": "cd tools/map && ts-node exportmap data/map-refactor.json",
-    "rename": "mv ./client/data/config.json-dist ./client/data/config.json && mv ./server/config.dev.ts ./server/config.ts",
+    "setup": "mv ./client/data/config.json-dist ./client/data/config.json && mv ./server/config.dev.ts ./server/config.ts",
     "test": "jest",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "fix": "gts fix"
