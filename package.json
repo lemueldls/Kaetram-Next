@@ -25,6 +25,9 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "fix": "gts fix"
   },
+  "engines" : {
+      "node": ">=8"
+  },
   "keywords": [
     "2d",
     "2d-game",

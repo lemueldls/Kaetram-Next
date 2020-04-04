@@ -8,8 +8,6 @@ node_js:
   - 10
   - 9
   - 8
-  - 7
-  - 6
 
 branches:
   only:
@@ -29,7 +27,8 @@ before_script:
 
 scripts:
   - npm test
-#   - npm run coveralls
+  - npm start
+  - npm run coveralls
 
 after_success:
   - npm pack
