@@ -1,5 +1,32 @@
 language: node_js
+
+node_js:
+  - 'node'
+  - 1'0'
+  - '9'
+  - '8'
+  - '7'
+  - '6'
+
+branches:
+  only:
+  - master
+  - /^release-.*/
+
+install:
+  - npm install
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm run setup
+  - npm run build
+
 scripts:
-  - npm install codecov -g
+  - npm test
+#   - npm run coveralls
+
 after_success:
-  - codecov
+  - npm pack

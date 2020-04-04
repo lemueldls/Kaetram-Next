@@ -1,17 +1,18 @@
 # Kaetram (Next)
 
-[![CircleCI](https://img.shields.io/circleci/build/gh/lemueldls/Kaetram-Next/master?logo=circleci&style=flat-square)](https://circleci.com/gh/lemueldls/Kaetram-Next/tree/master)
-[![Version](https://img.shields.io/github/package-json/v/lemueldls/Kaetram-Next?style=flat-square)](https://github.com/lemueldls/Kaetram-Next)
-[![MPL-2.0 License](https://img.shields.io/github/license/lemueldls/Kaetram-Next?style=flat-square)](https://github.com/lemueldls/Kaetram-Next/blob/master/LICENSE)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fkaetram.com%2F&style=flat-square)](https://kaetram.com/)
-[![Open Issues](https://img.shields.io/github/issues/lemueldls/Kaetram-Next?style=flat-square)](https://github.com/lemueldls/Kaetram-Next/issues)
+![Travis](https://img.shields.io/travis/com/lemueldls/Kaetram-Next?logo=travis)
+![Codecov](https://img.shields.io/codecov/c/gh/lemueldls/Kaetram-Next?logo=codecov)
+[![Version](https://img.shields.io/github/package-json/v/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next)
+[![MPL-2.0 License](https://img.shields.io/github/license/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next/blob/master/LICENSE)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fkaetram.com%2F&style=flat)](https://kaetram.com/)
+[![Open Issues](https://img.shields.io/github/issues/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next/issues)
 [![Watch This Repo](https://img.shields.io/github/watchers/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/subscription) <!-- /watchers -->
 [![Star This Repo](https://img.shields.io/github/stars/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/stargazers)
 [![Fork This Repo](https://img.shields.io/github/forks/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/fork)
-[![Discord](https://img.shields.io/discord/583033499741847574?logo=discord&color=7289da&style=flat-square)](https://discord.gg/MmbGAaw)
+[![Discord](https://img.shields.io/discord/583033499741847574?logo=discord&color=7289da&style=flat)](https://discord.gg/MmbGAaw)
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/kaetram?style=social&icon=reddit)](https://www.reddit.com/r/kaetram/)
 
-This repo is a *very* experimental fork of <https://github.com/Veradictus/Kaetram-Open> with the goal to add *modern* tools to enhance development in production (hence the `next`).
+This repo is a *very experimental* fork of <https://github.com/Veradictus/Kaetram-Open> with the goal to add **modern tools** to enhance development in production (hence the `next`).
 
 Kaetram is an open-source game-engine created to aid those interested in entering the game development realm. The codebase is simple, clean, and intuitive. This project is intended to be used as a learning tool. The original idea is based on Little Workshop's demo game &ndash; BrowserQuest (BQ). This game uses original BQ assets as well as custom-made ones. The entire code-base has been written from scratch, using more modern approaches.
 
@@ -52,10 +53,10 @@ Run
 
 ```console
 # If you use NPM:
-npm run rename
+npm run setup
 
 # If you use Yarn:
-yarn rename
+yarn setup
 ```
 
 this renames `config.ts-dist` to `config.ts`, and `config.dev.ts` to `config.json`. Make sure the settings in the client match those in the server. Modify the file as to fit your needs.
