@@ -2,11 +2,14 @@ language: node_js
 
 node_js:
   - 'node'
-  - '10'
-  - '9'
-  - '8'
-  - '7'
-  - '6'
+  - 13
+  - 12
+  - 11
+  - 10
+  - 9
+  - 8
+  - 7
+  - 6
 
 branches:
   only:
