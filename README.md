@@ -1,7 +1,7 @@
 # Kaetram (Next)
 
-![Travis](https://img.shields.io/travis/com/lemueldls/Kaetram-Next?logo=travis)
-![Codecov](https://img.shields.io/codecov/c/gh/lemueldls/Kaetram-Next?logo=codecov)
+[![Travis Build Status](https://img.shields.io/travis/com/lemueldls/Kaetram-Next?logo=travis)](https://travis-ci.com/lemueldls/Kaetram-Next)
+[![Codecov Coverage Status](https://img.shields.io/codecov/c/gh/lemueldls/Kaetram-Next?logo=codecov)](https://coveralls.io/github/lemueldls/Kaetram-Next?branch=master)
 [![Version](https://img.shields.io/github/package-json/v/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next)
 [![MPL-2.0 License](https://img.shields.io/github/license/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next/blob/master/LICENSE)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fkaetram.com%2F&style=flat)](https://kaetram.com/)

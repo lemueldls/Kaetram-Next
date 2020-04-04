@@ -27,7 +27,7 @@ before_script:
 
 scripts:
   - npm test
-  - npm run coveralls
+#   - npm run coverage
 
 after_success:
   - npm pack

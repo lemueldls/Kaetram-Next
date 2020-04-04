@@ -22,7 +22,7 @@
     "map": "cd tools/map && ts-node exportmap data/map-refactor.json",
     "setup": "mv ./client/data/config.json-dist ./client/data/config.json && mv ./server/config.dev.ts ./server/config.ts",
     "test": "jest",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "fix": "gts fix"
   },
   "engines" : {
