@@ -27,7 +27,6 @@ before_script:
 
 scripts:
   - npm test
-  - npm start
   - npm run coveralls
 
 after_success:
