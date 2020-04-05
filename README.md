@@ -1,5 +1,6 @@
 # Kaetram (Next)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4eb2509a5848486194d7990e863a4663)](https://app.codacy.com/manual/lemueldls/Kaetram-Next?utm_source=github.com&utm_medium=referral&utm_content=lemueldls/Kaetram-Next&utm_campaign=Badge_Grade_Settings)
 [![Travis Build Status](https://img.shields.io/travis/com/lemueldls/Kaetram-Next?logo=travis)](https://travis-ci.com/lemueldls/Kaetram-Next)
 [![Codecov Coverage Status](https://img.shields.io/codecov/c/gh/lemueldls/Kaetram-Next?logo=codecov)](https://coveralls.io/github/lemueldls/Kaetram-Next?branch=master)
 [![Version](https://img.shields.io/github/package-json/v/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next)
