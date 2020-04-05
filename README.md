@@ -12,7 +12,7 @@
 [![Discord](https://img.shields.io/discord/583033499741847574?logo=discord&color=7289da&style=flat)](https://discord.gg/MmbGAaw)
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/kaetram?style=social&icon=reddit)](https://www.reddit.com/r/kaetram/)
 
-This repo is a *very experimental* fork of <https://github.com/Veradictus/Kaetram-Open> with the goal to add **modern tools** to enhance development in production (hence the `next`).
+This repo is a **very experimental** fork of <https://github.com/Veradictus/Kaetram-Open> with the goal to add *modern tools* to enhance development in production (hence the `next`).
 
 Kaetram is an open-source game-engine created to aid those interested in entering the game development realm. The codebase is simple, clean, and intuitive. This project is intended to be used as a learning tool. The original idea is based on Little Workshop's demo game &ndash; BrowserQuest (BQ). This game uses original BQ assets as well as custom-made ones. The entire code-base has been written from scratch, using more modern approaches.
 
@@ -20,9 +20,9 @@ Kaetram is an open-source game-engine created to aid those interested in enterin
 
 **Discord** &ndash; <https://discord.gg/MmbGAaw>
 
-![Demo1](https://i.imgur.com/cZTFqnd.png)
+![Demo1](https://i.imgur.com/slnzrZB.png)
 ![Demo2](https://i.imgur.com/jS5d3oq.png)
-![Demo2](https://i.imgur.com/cZTFqnd.png)
+![Demo3](https://i.imgur.com/cZTFqnd.png)
 
 ## Features
 
