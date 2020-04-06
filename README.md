@@ -8,7 +8,6 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fkaetram.com%2F&style=flat)](https://kaetram.com/)
 [![Open Issues](https://img.shields.io/github/issues/lemueldls/Kaetram-Next?style=flat)](https://github.com/lemueldls/Kaetram-Next/issues)
 [![Watch This Repo](https://img.shields.io/github/watchers/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/subscription)
-<!-- /watchers -->
 [![Star This Repo](https://img.shields.io/github/stars/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/stargazers)
 [![Fork This Repo](https://img.shields.io/github/forks/lemueldls/Kaetram-Next?style=social&icon=github)](https://github.com/lemueldls/Kaetram-Next/fork)
 [![Discord](https://img.shields.io/discord/583033499741847574?logo=discord&color=7289da&style=flat)](https://discord.gg/MmbGAaw)
@@ -33,79 +32,89 @@ has been written from scratch, using more modern approaches.
 ![Demo2](https://i.imgur.com/jS5d3oq.png)
 ![Demo3](https://i.imgur.com/cZTFqnd.png)
 
+## Built With
+
 ## Features
 
 BQ was intended as an experiment to showcase HTML5 capabilities, since then,
 technology has only served to advance. Kaetram contains a lot of ideas and
 features that builds on top of its predecessor, a couple are:
 
--   Multiplayer using Socket.IO
--   Enhanced rendering engine (includes dynamic lighting, overlays, animated
-    tiles)
--   Region system (client receives only necessary data and saves it)
--   Questing and achievements system.
--   Plugin-based combat system (for bosses/special enemies)
--   And much more
+- Multiplayer using Socket.IO
+
+- Enhanced rendering engine (includes dynamic lighting, overlays, animated tiles)
+
+- Region system (client receives only necessary data and saves it)
+
+- Questing and achievements system.
+
+- Plugin-based combat system (for bosses/special enemies)
+
+- And much more
 
 ### Regions
 
 Kaetram is built with modularity in mind, as such, the client supports multiple
 tileset parsing. The tilemap can easily be constructed using
 [Tiled Map Editor](https://www.mapeditor.org/). Using our map parsing tool
-located in `tools/map/exportmap.ts` you can easily export your creation to both
-the client and the server.
+located in [`tools/map/exportmap.ts`](tools/map/exportmap.ts) you can easily
+export your creation to both the client and the server.
 
 ### Kaetram Hub
 
 The rendering engine has been updated such that it can handle multiple tilesets
 the same way Tiled editor can. Simply drop in your tileset in the
-`client/img/tilesets`. There is also support for a hub server. This can help
-connect servers across one another, allowing players to interact with their
-friends across them in a variety of ways (private messaging and guilds).
-Furthermore, the hub serves as a gateway for determining what server to place
-players in. If a server is full, it simply returns another server that has room
-for the player.
+[`client/img/tilesets`](client/img/tilesets). There is also support for a hub
+server. This can help connect servers across one another, allowing players to
+interact with their friends across them in a variety of ways (private messaging
+and guilds). Furthermore, the hub serves as a gateway for determining what
+server to place players in. If a server is full, it simply returns another
+server that has room for the player.
+
+## Prerequisites
+
+You must first [install Node.js](https://nodejs.org/en/download/) to run the
+server, and [install MongoDB](https://www.mongodb.com/download-center/community)
+database to store user data.
+
+> MongoDB is a requirement for Kaetram to run with all the features enabled, but
+> you can still run your own limited version if you do not want to install
+> MongoDB. To do this, set `Config.offlineMode = true` in the server
+> configuration. _If you do choose to install MongoDB, a user is not necessary,
+> but you can enable authentication with the `Config.mongoAuth` variable in the
+> [server configuration](server/config.ts)._
+
+After installing Node.js, install all packages by running
+
+```console
+npm install
+```
 
 ## Installing and Running
 
-You must first [install Node JS](https://nodejs.org/en/download/) to run the
-server.
-
-Before starting Kaetram, there is some configuration that must be done. Run
+Before starting Kaetram, there is some pre-configuration that must be done. Run
 
 ```console
-# If you use NPM:
 npm run setup
-
-# If you use Yarn:
-yarn setup
 ```
 
-this renames `config.ts-dist` to `config.ts`, and `config.dev.ts` to
-`config.json`. Make sure the settings in the client match those in the server.
-Modify the file as to fit your needs.
-
-MongoDB is a requirement for Kaetram to run with all the features enabled, but
-you can still run your own limited version if you do not want to install
-MongoDB. To do this, set `offlineMode = true` in the server configuration.
-
-If you do choose to install MongoDB, a user is not necessary, but you can enable
-authentication with the `mongoAuth` variable in the server configuration.
+this renames the client configerations([`config.ts-dist`](config.ts-dist) to
+[`config.ts`](config.ts)), and the server
+configerations([`config.dev.ts`](config.dev.ts) to
+[`config.json`](config.dev.ts)). Make sure the settings in the client match
+those in the server. Modify the file accordingly to fit your needs.
 
 ```console
-# If you use NPM:
 npm install
+npm run build
 npm start
-
-# If you use Yarn:
-yarn
-yarn start
 ```
 
 ## Map Parsing
 
-Once you finish modifying your map in `tools/map/data` you can parse the map
-data by executing `exportmap.ts` in `tools/map` directory. Example command:
+Once you finish modifying your map in [`tools/map/data`](tools/map/data) you can
+parse the map data by executing [`exportmap.ts`](exportmap.ts) in
+[`tools/map`](tools/map) directory. Example command:
 
 ```console
 npx ts-node ./exportmap.ts ./data/map.json
@@ -114,28 +123,34 @@ npx ts-node ./exportmap.ts ./data/map.json
 In order to build the current game map you can run
 
 ```console
-# If you use NPM:
 npm run map
-
-# If you use Yarn:
-yarn map
 ```
 
 ## TODO
 
 ### Gameplay
 
--   Finalize the new map.
--   Polish mob attributes.
--   Have a consistent storyline that goes with the game.
--   Implement special abilities and weapon perks.
--   Improve anti-cheating detections.
--   Add minigames
+- Finalize the new map.
+
+- Polish mob attributes.
+
+- Have a consistent storyline that goes with the game.
+
+- Implement special abilities and weapon perks.
+
+- Improve anti-cheating detections.
+
+- Add minigames
 
 ### Codebase Development
 
--   Write documentation outlining the entirety of the source code.
+- Write documentation outlining the entirety of the source code.
 
 ### Miscellaneous
 
--   Add (continue) to NPC talking &mdash; spacebar when talking
+- Add (continue) to NPC talking &mdash; spacebar when talking
+
+## License
+
+This project is licensed under the MPL-2.0 License - see the [LICENSE](LICENSE)
+file for details
