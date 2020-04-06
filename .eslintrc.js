@@ -19,6 +19,7 @@ module.exports = {
         'airbnb',
         'standard',
         'google',
+        'eslint:recommended',
         'plugin:jest/recommended',
         'plugin:prettier/recommended',
         'plugin:@typescript-eslint/recommended',
@@ -62,6 +63,7 @@ module.exports = {
         'no-useless-constructor': 'off',
         'standard/no-callback-literal': 'off',
         // 'no-fallthrough': 'off',
+        'no-underscore-dangle': 'off',
         'no-plusplus': ['off', { allowForLoopAfterthoughts: true }],
         // '@typescript-eslint/no-this-alias': 'off',
         // '@typescript-eslint/no-explicit-any': 'off',
@@ -72,7 +74,9 @@ module.exports = {
         'react/static-property-placement': 'off',
         // 'no-prototype-builtins': 'off',
         // 'no-case-declarations': 'off',
-        // 'no-shadow': 'off',
+        'no-restricted-syntax': 'off', // 🤔
+        'no-shadow': 'off',
+        'curly': ['warn', 'multi'],
         'prettier/prettier': 'warn',
         // 'tsdoc/syntax': 'warn',
 
