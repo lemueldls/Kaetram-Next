@@ -2,7 +2,7 @@ cache:
     - node_modules
 
 environment:
-    nodejs_version: '6'
+    nodejs_version: '8'
 
 install:
     - ps: Install-Product node $env:nodejs_version
@@ -12,8 +12,6 @@ install:
     - npm install
 
 before_build:
-    - node --version
-    - npm --version
     - npm run setup
 
 build_script:
