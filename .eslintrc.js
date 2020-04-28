@@ -6,14 +6,14 @@ module.exports = {
         node: true,
         jest: true,
         jquery: true,
-        mongo: true,
+        mongo: true
     },
     plugins: [
         'compat',
         'prettier',
         'jest',
         '@typescript-eslint',
-        'eslint-plugin-tsdoc',
+        'eslint-plugin-tsdoc'
     ],
     extends: [
         'airbnb',
@@ -22,18 +22,18 @@ module.exports = {
         'eslint:recommended',
         'plugin:jest/recommended',
         'plugin:prettier/recommended',
-        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended'
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 2018,
-        sourceType: 'module',
+        sourceType: 'module'
     },
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
         importScripts: 'readonly',
-        workbox: 'readonly',
+        workbox: 'readonly'
     },
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -42,8 +42,8 @@ module.exports = {
         'no-continue': 'off',
         'require-jsdoc': 'off',
         'valid-jsdoc': 'off',
-        // "class-methods-use-this": 'off',
-        // 'no-restricted-globals': 'off',
+        'class-methods-use-this': 'off', // TODO:
+        'no-restricted-globals': 'off', // TODO:
         'no-invalid-this': 'off',
         'global-require': 'off',
         'import/extensions': 'off',
@@ -52,7 +52,7 @@ module.exports = {
         'no-bitwise': 'off',
         'no-multi-assign': 'off',
         'default-case': 'off',
-        // 'no-caller': 'off',
+        'no-caller': 'off', // TODO:
         'no-fallthrough': 'off',
         'consistent-return': ['off', { treatUndefinedAsUnspecified: true }],
         radix: ['off', 'as-needed'],
@@ -62,22 +62,22 @@ module.exports = {
         'no-restricted-globals': 'off',
         'no-useless-constructor': 'off',
         'standard/no-callback-literal': 'off',
-        // 'no-fallthrough': 'off',
+        'no-fallthrough': 'off', // TODO:
         'no-underscore-dangle': 'off',
         'no-plusplus': ['off', { allowForLoopAfterthoughts: true }],
-        // '@typescript-eslint/no-this-alias': 'off',
-        // '@typescript-eslint/no-explicit-any': 'off',
-        // '@typescript-eslint/no-unused-vars': 'off',
-        // '@typescript-eslint/no-empty-function': 'off',
-        // '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/no-this-alias': 'off', // TODO:
+        '@typescript-eslint/no-explicit-any': 'off', // TODO: the big boi
+        '@typescript-eslint/no-unused-vars': 'off', // TODO:
+        '@typescript-eslint/no-empty-function': 'off', // TODO:
+        '@typescript-eslint/ban-ts-ignore': 'off', // TODO:
         '@typescript-eslint/explicit-function-return-type': 'off',
         'react/static-property-placement': 'off',
-        // 'no-prototype-builtins': 'off',
-        // 'no-case-declarations': 'off',
+        'no-prototype-builtins': 'off', // TODO:
+        'no-case-declarations': 'off', // TODO:
         'no-restricted-syntax': 'off', // 🤔
         'no-shadow': 'off',
-        'curly': ['warn', 'multi'],
-        'prettier/prettier': 'warn',
+        curly: ['warn', 'multi'],
+        'prettier/prettier': 'off',
         // 'tsdoc/syntax': 'warn',
 
         semi: ['warn', 'always'],
@@ -86,15 +86,15 @@ module.exports = {
             4,
             {
                 SwitchCase: 1,
-                flatTernaryExpressions: true,
-            },
+                flatTernaryExpressions: true
+            }
         ],
-        quotes: ['warn', 'single'],
+        quotes: ['warn', 'single']
     },
     ignorePatterns: [
         'node_modules/',
         '*.json',
         './client/lib/',
-        './client/**/lib/',
-    ],
+        './client/**/lib/'
+    ]
 };
