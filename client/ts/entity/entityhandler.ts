@@ -51,23 +51,21 @@ export default class EntityHandler {
                     attacker.follow(this.entity);
                 });
 
-                if (this.entity.type === 'mob') {
+                if (this.entity.type === 'mob')
                     this.game.socket.send(Packets.Movement, [
                         Packets.MovementOpcode.Entity,
                         this.entity.id,
                         this.entity.gridX,
-                        this.entity.gridY,
+                        this.entity.gridY
                     ]);
-                }
 
                 if (
                     this.entity.attackRange > 1 &&
                     this.entity.hasTarget() &&
                     this.entity.getDistance(this.entity.target) <=
                         this.entity.attackRange
-                ) {
+                )
                     this.entity.stop(false);
-                }
             });
 
             this.entity.onStopPathing(() => {

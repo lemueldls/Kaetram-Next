@@ -52,9 +52,8 @@ class TeamWar extends Minigame {
 
             this.buildTeams();
 
-            if (new Date().getTime() - this.lastSync > this.syncThreshold) {
+            if (new Date().getTime() - this.lastSync > this.syncThreshold)
                 this.synchronize();
-            }
 
             this.started = true;
         }, this.updateInterval);
@@ -68,6 +67,7 @@ class TeamWar extends Minigame {
         if (this.lobby.indexOf(player) > -1) return;
 
         this.lobby.push(player);
+        player.minigame = this.getState(player);
     }
 
     remove(player) {
@@ -83,7 +83,6 @@ class TeamWar extends Minigame {
      * These will be the two teams we are creating and
      * sending into the game map.
      */
-
     buildTeams() {
         const tmp = this.lobby.slice();
         const half = Math.ceil(tmp.length / 2);
@@ -110,49 +109,75 @@ class TeamWar extends Minigame {
         });
     }
 
+    /**
+     * We handle this logic client-sided. If a countdown does not exist,
+     * we create one, otherwise we synchronize it with the packets we receive.
+     */
     sendCountdown(player) {
-        /**
-         * We handle this logic client-sided. If a countdown does not exist,
-         * we create one, otherwise we synchronize it with the packets we receive.
-         */
-
         this.world.push(Packets.PushOpcode.Player, {
             player,
             message: new Messages.Minigame(Packets.MinigameOpcode.TeamWar, {
                 opcode: Packets.MinigameOpcode.TeamWarOpcode.Countdown,
-                countdown: this.countdown,
-            }),
+                countdown: this.countdown
+            })
         });
     }
 
-    // Used for radius
+    inLobby(player) {
+        // TODO: Update these when new lobby is available.
+        return player.x > 0 && player.x < 10 && player.y > 10 && player.y < 0;
+    }
+
+    /**
+     * Used for radius
+     */
     getRandom(radius?) {
         return Utils.randomInt(0, radius || 4);
     }
 
     getTeam(player) {
-        return this.redTeam.indexOf(player) > -1
-            ? 'red'
-            : this.blueTeam.indexOf(player) > -1
-            ? 'blue'
-            : 'lobby';
+        if (this.redTeam.indexOf(player) > -1) return 'red';
+
+        if (this.blueTeam.indexOf(player) > -1) return 'blue';
+
+        if (this.lobby.indexOf(player) > -1) return 'lobby';
+
+        return null;
     }
 
-    // Both these spawning areas randomize the spawning to a radius of 4
-    // The spawning area for the red team
+    /**
+     * Both these spawning areas randomize the spawning to a radius of 4
+     * The spawning area for the red team
+     */
     getRedTeamSpawn() {
         return {
             x: 133 + this.getRandom(),
-            y: 471 + this.getRandom(),
+            y: 471 + this.getRandom()
         };
     }
 
-    // The spawning area for the blue team
+    /**
+     * The spawning area for the blue team
+     */
     getBlueTeamSpawn() {
         return {
             x: 163 + this.getRandom(),
-            y: 499 + this.getRandom(),
+            y: 499 + this.getRandom()
         };
+    }
+
+    /**
+     * Expand on the super `getState()`
+     */
+    getState(player) {
+        const state = super.getState();
+
+        // Player can only be in team `red`, `blue`, or `lobby`.
+        state.team = this.getTeam(player);
+
+        if (!state.team) return null;
+
+        return state;
     }
 }
 

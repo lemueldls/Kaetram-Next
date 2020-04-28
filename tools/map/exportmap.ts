@@ -3,6 +3,7 @@
 import fs from 'fs';
 import file from '../file';
 import processMap from './processmap';
+config = { debugLevel: 'all' };
 
 let source = process.argv[2];
 
@@ -41,7 +42,7 @@ function parseInfo(data: any, destination: string, clientMap: { depth: any }) {
 function parseServer(data: any, destination: string) {
     const map = JSON.stringify(
         processMap(data, {
-            mode: 'server',
+            mode: 'server'
         })
     );
 

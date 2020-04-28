@@ -2,7 +2,8 @@
     "compilerOptions": {
         "allowJs": false,
         "module": "commonjs",
-        "target": "es5",
+
+        "target": "esnext",
         "types": ["node"],
         "rootDir": "./",
         "outDir": "../dist",
@@ -14,7 +15,8 @@
         "preserveConstEnums": true,
         "sourceMap": false,
         "resolveJsonModule": true,
-        "esModuleInterop": true,
+
+        "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "declaration": false,

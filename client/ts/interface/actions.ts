@@ -34,15 +34,13 @@ export default class Actions {
         const dropCancel = $('#dropCancel');
 
         dropAccept.click((event) => {
-            if (this.activeClass === 'inventory') {
+            if (this.activeClass === 'inventory')
                 this.interface.inventory.clickAction(event);
-            }
         });
 
         dropCancel.click((event) => {
-            if (this.activeClass === 'inventory') {
+            if (this.activeClass === 'inventory')
                 this.interface.inventory.clickAction(event);
-            }
         });
     }
 
@@ -68,9 +66,8 @@ export default class Actions {
         this.body.find('ul').prepend($('<li></li>').append(button));
 
         button.click((event) => {
-            if (this.activeClass === 'inventory') {
+            if (this.activeClass === 'inventory')
                 this.interface.inventory.clickAction(event);
-            }
         });
 
         if (misc) this.miscButton = button;
@@ -97,7 +94,7 @@ export default class Actions {
         this.pBody.fadeIn('fast');
         this.pBody.css({
             left: `${mouseX - this.pBody.width() / 2}px`,
-            top: `${mouseY + this.pBody.height() / 2}px`,
+            top: `${mouseY + this.pBody.height() / 2}px`
         });
 
         this.follow.click(() => {

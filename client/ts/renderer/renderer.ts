@@ -15,10 +15,7 @@ import Modules from '../utils/modules';
 import Camera from './camera';
 import Tile from './tile';
 
-const { DarkMask } = window.illuminated;
-const { Lamp } = window.illuminated;
-const { Lighting } = window.illuminated;
-const { Vec2 } = window.illuminated;
+const { DarkMask, Lamp, Lighting, Vec2, RectangleObject } = window.illuminated;
 
 const HORIZONTAL_FLIP_FLAG = 0x80000000;
 const VERTICAL_FLIP_FLAG = 0x40000000;
@@ -91,6 +88,8 @@ export default class Renderer {
     transitioning: boolean;
     transitionInterval: number;
     tileset: any;
+    tiles: {};
+    cells: {};
 
     constructor(
         background,
@@ -123,7 +122,7 @@ export default class Renderer {
             this.foreground,
             this.overlay,
             this.textCanvas,
-            this.cursor,
+            this.cursor
         ];
 
         this.allContexts = [
@@ -132,7 +131,7 @@ export default class Renderer {
             this.foreContext,
             this.overlayContext,
             this.textContext,
-            this.cursorContext,
+            this.cursorContext
         ];
 
         this.contexts = [this.context, this.textContext, this.overlayContext];
@@ -176,6 +175,9 @@ export default class Renderer {
         this.drawLevels = true;
         this.forceRendering = false;
         this.animatedTilesDrawCalls = 0;
+
+        this.tiles = {};
+        this.cells = {};
 
         this.load();
     }
@@ -238,6 +240,7 @@ export default class Renderer {
         this.camera = new Camera(this);
 
         this.loadSizes();
+        this.game.sendClientData();
 
         if (!storage.data.new) return;
 
@@ -252,7 +255,7 @@ export default class Renderer {
     loadLights() {
         this.darkMask = new DarkMask({
             lights: [],
-            color: 'rgba(0, 0, 0, 0.84)',
+            color: 'rgba(0, 0, 0, 0.84)'
         });
 
         this.darkMask.compute(this.overlay.width, this.overlay.height);
@@ -265,7 +268,7 @@ export default class Renderer {
 
         this.checkDevice();
 
-        if (!this.resizeTimeout) {
+        if (!this.resizeTimeout)
             this.resizeTimeout = window.setTimeout(() => {
                 this.scale = this.getScale();
                 this.clearScreen(this.cursorContext);
@@ -287,7 +290,6 @@ export default class Renderer {
 
                 this.forceRendering = true;
             }, 500);
-        }
     }
 
     render() {
@@ -355,9 +357,8 @@ export default class Renderer {
                 context = isLightTile ? this.overlayContext : context;
             }
 
-            if (!this.map.isAnimatedTile(id) || !this.animateTiles) {
-                this.drawTile(context, id, this.map.width, index);
-            }
+            if (!this.map.isAnimatedTile(id) || !this.animateTiles)
+                this.drawTile(context, id, index);
         });
 
         this.restoreDrawing();
@@ -389,9 +390,8 @@ export default class Renderer {
         this.setCameraView(this.foreContext);
 
         this.forEachVisibleTile((id, index) => {
-            if (this.map.isHighTile(id)) {
-                this.drawTile(this.foreContext, id, this.map.width, index);
-            }
+            if (this.map.isHighTile(id))
+                this.drawTile(this.foreContext, id, index);
         });
 
         this.foreContext.restore();
@@ -408,7 +408,7 @@ export default class Renderer {
 
             tile.animate(this.game.time);
 
-            this.drawTile(this.context, tile.id, this.map.width, tile.index);
+            this.drawTile(this.context, tile.id, tile.index);
         });
 
         this.context.restore();
@@ -534,9 +534,8 @@ export default class Renderer {
             this.context.scale(1, -1);
         } else this.context.translate(dx, dy);
 
-        if (entity.customScale) {
+        if (entity.customScale)
             this.context.scale(entity.customScale, entity.customScale);
-        }
 
         if (entity.angled) this.context.rotate(data.angle);
 
@@ -698,9 +697,8 @@ export default class Renderer {
             !entity.hitPoints ||
             entity.hitPoints < 0 ||
             !entity.healthBarVisible
-        ) {
+        )
             return;
-        }
 
         const barLength = 16;
         const healthX = entity.x * this.superScaling - barLength / 2 + 8;
@@ -732,9 +730,8 @@ export default class Renderer {
             entity.hidden ||
             !entity.drawNames() ||
             (!this.drawNames && !this.drawLevels)
-        ) {
+        )
             return;
-        }
 
         let colour = entity.wanted ? 'red' : 'white';
 
@@ -753,7 +750,7 @@ export default class Renderer {
             const x = entity.x + 8;
             const y = entity.y - 10;
 
-            if (this.drawNames && entity instanceof Character) {
+            if (this.drawNames && entity instanceof Character)
                 this.drawText(
                     entity.name,
                     x,
@@ -762,12 +759,11 @@ export default class Renderer {
                     colour,
                     '#000'
                 );
-            }
 
             if (
                 this.drawLevels &&
                 (entity.type === 'mob' || entity.type === 'player')
-            ) {
+            )
                 this.drawText(
                     `Level ${entity.level}`,
                     x,
@@ -776,14 +772,12 @@ export default class Renderer {
                     colour,
                     '#000'
                 );
-            }
 
             if (entity.type === 'item') {
-                if (entity.count > 1) {
+                if (entity.count > 1)
                     this.drawText(entity.count, x, y, true, colour);
-                }
 
-                if (entity.ability > -1) {
+                if (entity.ability > -1)
                     this.drawText(
                         `${Modules.EnchantmentNames[entity.ability]} [+${
                             entity.abilityLevel
@@ -793,7 +787,6 @@ export default class Renderer {
                         true,
                         colour
                     );
-                }
             }
         } else {
             // TODO - Move this countdown elsewhere.
@@ -842,9 +835,8 @@ export default class Renderer {
             this.mobile ||
             this.hasRenderedMouse() ||
             this.input.cursorMoved
-        ) {
+        )
             return;
-        }
 
         const { cursor } = this.input;
         const scaling = 14 * this.superScaling;
@@ -855,7 +847,7 @@ export default class Renderer {
         if (cursor) {
             if (!cursor.loaded) cursor.load();
 
-            if (cursor.loaded) {
+            if (cursor.loaded)
                 this.cursorContext.drawImage(
                     cursor.image,
                     0,
@@ -867,7 +859,6 @@ export default class Renderer {
                     scaling,
                     scaling
                 );
-            }
         }
 
         this.cursorContext.restore();
@@ -942,13 +933,15 @@ export default class Renderer {
                 y < 0 ||
                 x > this.map.width - 1 ||
                 y > this.map.height - 1
-            ) {
+            )
                 return;
-            }
 
-            if (pathingGrid[y][x] !== 0) {
-                this.drawCellHighlight(x, y, 'rgba(50, 50, 255, 0.5)');
-            }
+            this.drawCellHighlight(
+                x,
+                y,
+
+                'rgba(50, 50, 255, 0.5)'
+            );
         });
     }
 
@@ -991,8 +984,14 @@ export default class Renderer {
      * Primitive drawing functions
      */
 
-    drawTile(context, tileId, gridWidth, cellId) {
+    drawTile(context, tileId, cellId) {
+        const originalTileId = tileId;
         let rotation;
+
+        /**
+         * `originalTileId` is the tileId prior to doing any
+         * bitwise operations (for rotations).
+         */
 
         if (tileId < 0) return;
 
@@ -1014,38 +1013,68 @@ export default class Renderer {
 
         if (!tileset) return;
 
-        tileId -= tileset.firstGID - 1;
+        /**
+         * Removed tilesetScale (tileset.scale) variables since it
+         * is generally always 1. The reason for the variable was
+         * due to the usage of the large PNG file, which Chrome
+         * split up and messed with.
+         */
 
-        const setWidth = tileset.width / this.tileSize / tileset.scale;
+        if (!(originalTileId in this.tiles)) {
+            const setWidth = tileset.width / this.tileSize;
+            const relativeTileId = tileId - tileset.firstGID + 1;
 
-        this.drawScaledImage(
+            this.tiles[originalTileId] = {
+                relativeTileId,
+                setWidth,
+                x: this.getX(relativeTileId + 1, setWidth) * this.tileSize,
+                y: Math.floor(relativeTileId / setWidth) * this.tileSize,
+                width: this.tileSize,
+                height: this.tileSize,
+                rotation
+            };
+        }
+
+        if (!(cellId in this.cells)) {
+            const scale = this.superScaling;
+
+            this.cells[cellId] = {
+                dx:
+                    this.getX(cellId + 1, this.map.width) *
+                    this.tileSize *
+                    scale,
+                dy: Math.floor(cellId / this.map.width) * this.tileSize * scale,
+                width: this.tileSize * scale,
+                height: this.tileSize * scale
+            };
+        }
+
+        this.drawImage(
             context,
             tileset,
-            this.getX(tileId + 1, setWidth) * this.tileSize,
-            Math.floor(tileId / setWidth) * this.tileSize,
-            this.tileSize,
-            this.tileSize,
-            this.getX(cellId + 1, gridWidth) * this.tileSize,
-            Math.floor(cellId / gridWidth) * this.tileSize,
-            rotation
+            this.tiles[originalTileId],
+            this.cells[cellId]
         );
     }
 
-    drawScaledImage(context, image, x, y, width, height, dx, dy, rotation) {
-        const tilesetScale = image.scale;
-        const scale = this.superScaling; // this.superScaling * 1.5;
-
+    drawImage(context, image, tile, cell) {
+        const scale = this.superScaling;
+        let dx;
+        let dy; // this.superScaling * 1.5;
         if (!context) return;
 
-        if (rotation) {
+        if (tile.rotation) {
             context.save();
-            context.rotate(rotation);
+            context.rotate(tile.rotation);
 
-            const temp = dx;
+            dx = cell.dx;
+            dy = cell.dy;
 
-            switch (rotation) {
+            const temp = cell.dx;
+
+            switch (tile.rotation) {
                 case ROT_180_DEG:
-                    context.translate(-width * scale, -height * scale);
+                    context.translate(-cell.width, -cell.height);
 
                     dx = -dx;
                     dy = -dy;
@@ -1053,18 +1082,19 @@ export default class Renderer {
                     break;
 
                 case ROT_90_DEG:
-                    context.translate(0, -height * scale);
+                    context.translate(0, -cell.height);
 
+                    cell.dx = cell.dy;
                     dx = dy;
                     dy = -temp;
 
                     break;
 
                 case ROT_NEG_90_DEG:
-                    context.translate(-width * scale, 0);
+                    context.translate(-cell.width, 0);
 
-                    dx = -dy;
-                    dy = temp;
+                    cell.dx = -cell.dy;
+                    cell.dy = temp;
 
                     break;
             }
@@ -1072,17 +1102,19 @@ export default class Renderer {
 
         context.drawImage(
             image,
-            x * tilesetScale, // Source X
-            y * tilesetScale, // Source Y
-            width * tilesetScale, // Source Width
-            height * tilesetScale, // Source Height
-            dx * scale, // Destination X
-            dy * scale, // Destination Y
-            width * scale, // Destination Width
-            height * scale
-        ); // Destination Height
+            tile.x, // Source X
+            tile.y, // Source Y
+            tile.width, // Source Width
+            tile.height, // Source Height
+            cell.dx, // Destination X
+            cell.dy, // Destination Y
+            tile.rotation ? dx : cell.dx, // Destination X
+            tile.rotation ? dy : cell.dy, // Destination Y
+            cell.width, // Destination Width
+            cell.height // Destination Height
+        );
 
-        if (rotation) context.restore();
+        if (tile.rotation) context.restore();
     }
 
     drawText(text, x, y, centered, colour, strokeColour?, fontSize?) {
@@ -1173,9 +1205,8 @@ export default class Renderer {
             !this.camera ||
             !this.map ||
             this.input.keyMovement
-        ) {
+        )
             return;
-        }
 
         const location = this.input.getCoords();
 
@@ -1201,9 +1232,8 @@ export default class Renderer {
 
     forEachVisibleIndex(callback, offset) {
         this.camera.forEachVisiblePosition((x, y) => {
-            if (!this.map.isOutOfBounds(x, y)) {
+            if (!this.map.isOutOfBounds(x, y))
                 callback(this.map.gridPositionToIndex(x, y) - 1);
-            }
         }, offset);
     }
 
@@ -1213,13 +1243,13 @@ export default class Renderer {
         this.forEachVisibleIndex((index) => {
             const indexData = this.map.data[index];
 
-            if (Array.isArray(indexData)) {
-                _.each(indexData, (id) => {
-                    callback(id - 1, index);
-                });
-            } else if (!isNaN(this.map.data[index] - 1)) {
+            if (Array.isArray(indexData))
+                for (let i = 0; i < indexData.length; i++) {
+                    const data = indexData[i];
+                    if (data) callback(data[i] - 1, index);
+                }
+            else if (!isNaN(this.map.data[index] - 1))
                 callback(this.map.data[index] - 1, index);
-            }
         }, offset);
     }
 
@@ -1235,11 +1265,10 @@ export default class Renderer {
         const { grids } = this.entities;
 
         this.camera.forEachVisiblePosition((x, y) => {
-            if (!this.map.isOutOfBounds(x, y) && grids.renderingGrid[y][x]) {
+            if (!this.map.isOutOfBounds(x, y) && grids.renderingGrid[y][x])
                 _.each(grids.renderingGrid[y][x], (entity) => {
                     callback(entity);
                 });
-            }
         });
     }
 
@@ -1313,9 +1342,8 @@ export default class Renderer {
     }
 
     hasRenderedFrame() {
-        if (this.forceRendering || (this.mobile && this.camera.centered)) {
+        if (this.forceRendering || (this.mobile && this.camera.centered))
             return false;
-        }
 
         if (!this.camera || this.stopRendering || !this.input) return true;
 
@@ -1493,14 +1521,36 @@ export default class Renderer {
         this.darkMask.compute(this.overlay.width, this.overlay.height);
     }
 
-    addLight(x, y, distance, diffuse, color, relative) {
+    parseObjects(objects) {
+        const parsedObjects = [];
+
+        if (!objects) return parsedObjects;
+
+        for (let i = 0; i < objects.length; i++) {
+            const object = objects[i];
+
+            parsedObjects.push(
+                new RectangleObject({
+                    topleft: new Vec2(object.x, object.y),
+                    bottomright: new Vec2(
+                        object.x + this.tileSize,
+                        object.y + this.tileSize
+                    )
+                })
+            );
+        }
+
+        return parsedObjects;
+    }
+
+    addLight(x, y, distance, diffuse, color, relative, objects) {
         const light = new Lamp(
             this.getLightData(x, y, distance, diffuse, color)
         );
         const lighting = new Lighting({
             light,
-            objects: [],
-            diffuse: light.diffuse,
+            objects: this.parseObjects(objects),
+            diffuse: light.diffuse
         });
 
         light.origX = light.position.x;
@@ -1546,7 +1596,7 @@ export default class Renderer {
             radius: 0,
             samples: 2,
             roughness: 0,
-            angle: 0,
+            angle: 0
         };
     }
 
@@ -1558,9 +1608,8 @@ export default class Renderer {
                 lighting.light.origX === light.origX &&
                 lighting.light.origY === light.origY &&
                 lighting.light.distance === light.distance
-            ) {
+            )
                 return true;
-            }
         }
 
         return false;
@@ -1570,7 +1619,7 @@ export default class Renderer {
         const position = {
             x: lighting.light.origX,
             y: lighting.light.origY,
-            diff: lighting.light.diff,
+            diff: lighting.light.diff
         };
 
         return (
@@ -1586,7 +1635,7 @@ export default class Renderer {
     getMiddle() {
         return {
             x: this.overlay.width / 2,
-            y: this.overlay.height / 2,
+            y: this.overlay.height / 2
         };
     }
 

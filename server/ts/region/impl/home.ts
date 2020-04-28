@@ -28,14 +28,14 @@ class Home {
         const info = {
             indexes: [],
             data: [],
-            collisions: [],
+            collisions: []
         };
 
         /**
          * Clones the region we're starting off with. After which we'll be hard-coding data into it.
          */
 
-        for (let y = startPosition.startY; y < endPosition.endY; y++) {
+        for (let y = startPosition.startY; y < endPosition.endY; y++)
             for (let x = startPosition.startX; x < endPosition.endX; x++) {
                 const tileIndex = this.region.gridPositionToIndex(x, y);
 
@@ -43,7 +43,6 @@ class Home {
                 info.data.push((MapClient as any).data[tileIndex]);
                 info.collisions.push(this.map.isColliding(x, y));
             }
-        }
     }
 }
 

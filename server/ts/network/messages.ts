@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import Packets from './packets';
 
 export default {
@@ -291,13 +293,21 @@ export default {
 
         message: any;
 
-        constructor(opcode, message) {
+        colour: any;
+
+        constructor(opcode, message, colour?) {
             this.opcode = opcode;
             this.message = message;
+            this.colour = colour;
         }
 
         serialize() {
-            return [Packets.Notification, this.opcode, this.message];
+            return [
+                Packets.Notification,
+                this.opcode,
+                this.message,
+                this.colour
+            ];
         }
     },
 
@@ -539,5 +549,5 @@ export default {
         serialize() {
             return [Packets.Bubble, this.info];
         }
-    },
+    }
 };

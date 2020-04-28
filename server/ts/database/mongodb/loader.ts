@@ -31,11 +31,10 @@ class Loader {
                 const info = inventoryArray[0];
 
                 if (info) {
-                    if (info.username !== player.username) {
+                    if (info.username !== player.username)
                         console.info(
                             `[Loader] Mismatch in usernames whilst retrieving inventory data for: ${player.username}`
                         );
-                    }
 
                     callback(
                         info.ids.split(' '),
@@ -57,11 +56,10 @@ class Loader {
                 const info = bankArray[0];
 
                 if (info) {
-                    if (info.username !== player.username) {
+                    if (info.username !== player.username)
                         console.info(
                             `[Loader] Mismatch in usernames whilst retrieving bank data for: ${player.username}`
                         );
-                    }
 
                     callback(
                         info.ids.split(' '),
@@ -83,11 +81,10 @@ class Loader {
                 const info = questArray[0];
 
                 if (info) {
-                    if (info.username !== player.username) {
+                    if (info.username !== player.username)
                         console.info(
                             `[Loader] Mismatch in usernames whilst retrieving quest data for: ${player.username}`
                         );
-                    }
 
                     callback(info.ids.split(' '), info.stages.split(' '));
                 } else callback(null, null);
@@ -104,11 +101,10 @@ class Loader {
                 const info = achievementsArray[0];
 
                 if (info) {
-                    if (info.username !== player.username) {
+                    if (info.username !== player.username)
                         console.info(
                             `[Loader] Mismatch in usernames whilst retrieving achievement data for: ${player.username}`
                         );
-                    }
 
                     callback(info.ids.split(' '), info.progress.split(' '));
                 }
@@ -141,16 +137,15 @@ class Loader {
                     return;
                 }
 
-                if (info.name !== name) {
+                if (info.name !== name)
                     console.info(
                         `[Loader] Mismatch whilst retrieving guild data for ${name}`
                     );
-                }
 
                 callback({
                     name: info.name,
                     owner: info.owner,
-                    members: info.members,
+                    members: info.members
                 });
             });
         });

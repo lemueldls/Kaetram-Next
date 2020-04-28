@@ -1,9 +1,9 @@
 class Socket {
-    public _connections: any;
+    private _connections: any;
 
     port: any;
 
-    _counter: number;
+    protected _counter: number;
 
     constructor(port) {
         this.port = port;

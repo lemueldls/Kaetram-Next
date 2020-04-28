@@ -33,9 +33,8 @@ export default class Sprites {
             this.sprites[sprite.id] = new Sprite(sprite, this.renderer.scale);
         });
 
-        if (this.renderer.game.isDebug()) {
+        if (this.renderer.game.isDebug())
             console.info('Finished loading sprite data...');
-        }
 
         if (this.loadedSpritesCallback) this.loadedSpritesCallback();
     }
@@ -50,11 +49,10 @@ export default class Sprites {
             sprite.update(this.renderer.getScale());
         });
 
-        if (this.renderer.game.isDebug()) {
+        if (this.renderer.game.isDebug())
             console.info(
                 `Updated sprites to scale: ${this.renderer.getScale()}`
             );
-        }
     }
 
     onLoadedSprites(callback) {

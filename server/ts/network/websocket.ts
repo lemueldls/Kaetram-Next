@@ -12,8 +12,6 @@ import config from '../../config';
  *
  */
 class WebSocket extends Socket {
-    public _counter: any;
-
     public connectionCallback: any;
 
     public webSocketReadyCallback: any;
@@ -40,8 +38,8 @@ class WebSocket extends Socket {
 
         app.use(serve('client-dist', { index: ['index.html'] }), null);
 
-        const readyWebSocket = (port) => {
-            console.info(`Server is now listening on: ${port}`);
+        const readyWebSocket = (serverPort) => {
+            console.info(`Server is now listening on: ${serverPort}`);
 
             if (this.webSocketReadyCallback) this.webSocketReadyCallback();
         };
@@ -54,10 +52,9 @@ class WebSocket extends Socket {
 
         this.io = new SocketIO(this.httpServer);
         this.io.on('connection', (socket) => {
-            if (socket.handshake.headers['cf-connecting-ip']) {
+            if (socket.handshake.headers['cf-connecting-ip'])
                 socket.conn.remoteAddress =
                     socket.handshake.headers['cf-connecting-ip'];
-            }
 
             console.info(
                 `Received connection from: ${socket.conn.remoteAddress}`

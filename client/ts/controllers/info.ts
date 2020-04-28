@@ -56,15 +56,14 @@ export default class Info {
 
                 const splat = new Splat(id, type, text + amount, x, y, false);
 
-                if (type === Modules.Hits.Heal) {
+                if (type === Modules.Hits.Heal)
                     colour = Modules.DamageColours.healed;
-                } else if (type === Modules.Hits.Mana) {
+                else if (type === Modules.Hits.Mana)
                     colour = Modules.DamageColours.mana;
-                } else if (type === Modules.Hits.Experience) {
+                else if (type === Modules.Hits.Experience)
                     colour = Modules.DamageColours.exp;
-                } else if (type === Modules.Hits.Poison) {
+                else if (type === Modules.Hits.Poison)
                     colour = Modules.DamageColours.poison;
-                }
 
                 splat.setColours(colour.fill, colour.stroke);
 

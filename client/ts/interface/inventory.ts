@@ -43,12 +43,11 @@ export default class Inventory {
 
             const itemSlot = $(`<div id="slot${i}" class="itemSlot"></div>`);
 
-            if (item.string !== 'null') {
+            if (item.string !== 'null')
                 itemSlot.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), item.string)
                 );
-            }
 
             itemSlot.css('background-size', '600%');
 
@@ -63,13 +62,13 @@ export default class Inventory {
             const itemSlotList = $('<li></li>');
             let { count } = item;
 
-            if (count > 999999) {
+            if (count > 999999)
                 count = `${count
                     .toString()
                     .substring(0, count.toString().length - 6)}M`;
-            } else if (count > 9999) {
+            else if (count > 9999)
                 count = `${count.toString().substring(0, 2)}K`;
-            } else if (count === 1) count = '';
+            else if (count === 1) count = '';
 
             itemSlotList.append(itemSlot);
             itemSlotList.append(
@@ -92,7 +91,7 @@ export default class Inventory {
 
         this.game.socket.send(Packets.Click, [
             'inventory',
-            this.button.hasClass('active'),
+            this.button.hasClass('active')
         ]);
     }
 
@@ -103,28 +102,22 @@ export default class Inventory {
 
         this.clearSelection();
 
-        if (
-            slot.string === null ||
-            slot.count === -1 ||
-            slot.string === 'null'
-        ) {
+        if (slot.string === null || slot.count === -1 || slot.string === 'null')
             return;
-        }
 
         this.actions.reset();
         this.actions.loadDefaults('inventory');
 
-        if (slot.edible) {
+        if (slot.edible)
             this.actions.add($('<div id="eat" class="actionButton">Eat</div>'));
-        } else if (slot.equippable) {
+        else if (slot.equippable)
             this.actions.add(
                 $('<div id="wield" class="actionButton">Wield</div>')
             );
-        } else if (slot.count > 999999) {
+        else if (slot.count > 999999)
             this.actions.add(
                 $('<div id="itemInfo" class="actionButton">Info</div>')
             );
-        }
 
         if (!this.actions.isVisible()) this.actions.show();
 
@@ -167,7 +160,7 @@ export default class Inventory {
             case 'wield':
                 this.game.socket.send(Packets.Inventory, [
                     Packets.InventoryOpcode.Select,
-                    this.selectedItem.index,
+                    this.selectedItem.index
                 ]);
                 this.clearSelection();
 
@@ -183,7 +176,7 @@ export default class Inventory {
                 } else {
                     this.game.socket.send(Packets.Inventory, [
                         Packets.InventoryOpcode.Remove,
-                        item,
+                        item
                     ]);
                     this.clearSelection();
                 }
@@ -198,7 +191,7 @@ export default class Inventory {
                 this.game.socket.send(Packets.Inventory, [
                     Packets.InventoryOpcode.Remove,
                     this.selectedItem,
-                    count,
+                    count
                 ]);
                 this.actions.hideDrop();
                 this.clearSelection();
@@ -251,11 +244,11 @@ export default class Inventory {
         const { count } = slot;
         let size: string;
 
-        if (count > 999999) {
+        if (count > 999999)
             size = `${count
                 .toString()
                 .substring(0, count.toString().length - 6)}M`;
-        } else if (count > 9999) size = `${count.toString().substring(0, 2)}K`;
+        else if (count > 9999) size = `${count.toString().substring(0, 2)}K`;
         else if (count === 1) size = '';
 
         item.find(`#itemCount${info.index}`).text(size);
@@ -288,12 +281,11 @@ export default class Inventory {
             if (!slot) continue;
 
             if (Detect.isMobile()) item.css('background-size', '600%');
-            else {
+            else
                 item.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), slot.string)
                 );
-            }
         }
     }
 

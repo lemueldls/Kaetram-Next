@@ -12,7 +12,7 @@ class Bot {
 
     constructor() {
         this.bots = [];
-        this.botCount = 350;
+        this.botCount = 100;
 
         this.load();
     }
@@ -24,7 +24,7 @@ class Bot {
             this.botCount--;
 
             if (this.botCount < 1) clearInterval(connecting);
-        }, 200);
+        }, 1000);
 
         setInterval(() => {
             _.each(this.bots, (bot) => {
@@ -39,7 +39,7 @@ class Bot {
 
         connection = io('ws://127.0.0.1:9001', {
             forceNew: true,
-            reconnection: false,
+            reconnection: false
         });
 
         connection.on('connect', () => {
@@ -48,7 +48,7 @@ class Bot {
             connection.emit('client', {
                 gVer: config.gver,
                 cType: 'HTML5',
-                bot: true,
+                bot: true
             });
         });
 
@@ -60,13 +60,12 @@ class Bot {
             if (message.startsWith('[')) {
                 const data = JSON.parse(message);
 
-                if (data.length > 1) {
+                if (data.length > 1)
                     _.each(data, (msg) => {
                         this.handlePackets(connection, msg);
                     });
-                } else {
+                else
                     this.handlePackets(connection, JSON.parse(message).shift());
-                }
             } else this.handlePackets(connection, message, 'utf8');
         });
 
@@ -136,7 +135,7 @@ class Bot {
                 newY,
                 currentX,
                 currentY,
-                250,
+                250
             ]);
         }, 250);
 

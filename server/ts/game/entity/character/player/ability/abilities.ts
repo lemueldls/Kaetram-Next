@@ -36,9 +36,8 @@ class Abilities {
     }
 
     removeAbility(ability) {
-        if (this.isShortcut(ability)) {
+        if (this.isShortcut(ability))
             this.removeShortcut(this.shortcuts.indexOf(ability.name));
-        }
 
         delete this.abilities[ability.name];
     }
@@ -73,7 +72,7 @@ class Abilities {
             username: this.player.username,
             abilities,
             abilityLevels,
-            shortcuts,
+            shortcuts
         };
     }
 }

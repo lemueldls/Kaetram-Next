@@ -39,20 +39,17 @@ class Handler {
             this.detectAggro();
             this.detectPVP(this.player.x, this.player.y);
 
-            if (this.updateTicks % 4 === 0) {
+            if (this.updateTicks % 4 === 0)
                 // Every 4 (1.6 seconds) update ticks.
                 this.handlePoison();
-            }
 
-            if (this.updateTicks % 16 === 0) {
+            if (this.updateTicks % 16 === 0)
                 // Every 16 (6.4 seconds) update ticks.
                 this.player.cheatScore = 0;
-            }
 
-            if (this.updateTicks > 100) {
+            if (this.updateTicks > 100)
                 // Reset them every now and then.
                 this.updateTicks = 0;
-            }
 
             this.updateTicks++;
         }, 400);
@@ -76,9 +73,8 @@ class Handler {
              * instance is hit by 'damage' amount
              */
 
-            if (this.player.combat.isRetaliating()) {
+            if (this.player.combat.isRetaliating())
                 this.player.combat.begin(attacker);
-            }
         });
 
         this.player.onKill((character) => {
@@ -87,9 +83,8 @@ class Handler {
                     character
                 );
 
-                if (achievement && achievement.isStarted()) {
+                if (achievement && achievement.isStarted())
                     this.player.quests.getAchievementByMob(character).step();
-                }
             }
         });
 
@@ -151,7 +146,7 @@ class Handler {
             this.player.send(
                 new Messages.NPC(Packets.NPCOpcode.Talk, {
                     id: npc.instance,
-                    text: npc.talk(text, this.player),
+                    text: npc.talk(text, this.player)
                 })
             );
         });
@@ -161,9 +156,8 @@ class Handler {
                 !this.player.finishedTutorial() &&
                 isDoor &&
                 this.player.doorCallback
-            ) {
+            )
                 this.player.doorCallback(x, y);
-            }
         });
 
         this.player.onPoison((info) => {

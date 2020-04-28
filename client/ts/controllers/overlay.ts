@@ -45,7 +45,7 @@ export default class Overlay {
                 width: `${
                     Math.ceil((entity.hitPoints / entity.maxHitPoints) * 100) -
                     10
-                }%`,
+                }%`
             });
 
             this.details.html(`${entity.hitPoints} / ${entity.maxHitPoints}`);
@@ -60,7 +60,7 @@ export default class Overlay {
                 this.hovering.id === entityId &&
                 this.hovering.type !== 'npc' &&
                 this.hovering.type !== 'item'
-            ) {
+            )
                 if (hitPoints < 1) this.hide();
                 else {
                     this.health.css(
@@ -75,7 +75,6 @@ export default class Overlay {
                         `${hitPoints} / ${this.hovering.maxHitPoints}`
                     );
                 }
-            }
         });
     }
 

@@ -76,7 +76,7 @@ export default class Shop {
             Packets.ShopOpcode.Buy,
             this.openShop,
             id,
-            1,
+            1
         ]);
     }
 
@@ -84,7 +84,7 @@ export default class Shop {
         // The server will handle the selected item and verifications.
         this.game.socket.send(Packets.Shop, [
             Packets.ShopOpcode.Sell,
-            this.openShop,
+            this.openShop
         ]);
     }
 
@@ -94,7 +94,7 @@ export default class Shop {
         this.game.socket.send(Packets.Shop, [
             Packets.ShopOpcode.Select,
             this.openShop,
-            id,
+            id
         ]);
     }
 
@@ -113,7 +113,7 @@ export default class Shop {
 
         this.sellSlot.css({
             'background-image': slotImage.css('background-image'),
-            'background-size': slotImage.css('background-size'),
+            'background-size': slotImage.css('background-size')
         });
 
         this.sellSlotReturn.css({
@@ -121,7 +121,7 @@ export default class Shop {
                 this.getScale(),
                 info.currency
             ),
-            'background-size': this.sellSlot.css('background-size'),
+            'background-size': this.sellSlot.css('background-size')
         });
 
         this.sellSlotReturnText.text(info.price);
@@ -211,7 +211,7 @@ export default class Shop {
 
             this.container.setSlot(i, {
                 string,
-                count,
+                count
             });
 
             // Bind the itemBuy to the local buy function.

@@ -38,15 +38,14 @@ export default class PlayerHandler {
 
             const ignores = [this.player];
 
-            if (!this.game.map.isColliding(x, y)) {
+            if (!this.game.map.isColliding(x, y))
                 this.socket.send(Packets.Movement, [
                     Packets.MovementOpcode.Request,
                     x,
                     y,
                     this.player.gridX,
-                    this.player.gridY,
+                    this.player.gridY
                 ]);
-            }
 
             return this.game.findPath(this.player, x, y, ignores);
         });
@@ -59,9 +58,8 @@ export default class PlayerHandler {
             [this.input.selectedX, this.input.selectedY] = path[i];
             this.input.selectedCellVisible = true;
 
-            if (this.game.isDebug()) {
+            if (this.game.isDebug())
                 console.info(`Movement speed: ${this.player.movementSpeed}`);
-            }
 
             this.socket.send(Packets.Movement, [
                 Packets.MovementOpcode.Started,
@@ -69,7 +67,7 @@ export default class PlayerHandler {
                 this.input.selectedY,
                 this.player.gridX,
                 this.player.gridY,
-                this.player.movementSpeed,
+                this.player.movementSpeed
             ]);
         });
 
@@ -96,20 +94,19 @@ export default class PlayerHandler {
                 y,
                 id,
                 hasTarget,
-                this.player.orientation,
+                this.player.orientation
             ]);
 
             this.socket.send(Packets.Target, [
                 this.getTargetType(),
-                this.getTargetId(),
+                this.getTargetId()
             ]);
 
             if (hasTarget) {
                 this.player.lookAt(this.player.target);
 
-                if (this.player.target.type === 'object') {
+                if (this.player.target.type === 'object')
                     this.player.removeTarget();
-                }
             }
 
             this.input.setPassiveTarget();
@@ -125,9 +122,8 @@ export default class PlayerHandler {
             if (!this.isAttackable()) return;
 
             if (this.player.isRanged()) {
-                if (this.player.getDistance(this.player.target) < 7) {
+                if (this.player.getDistance(this.player.target) < 7)
                     this.player.stop();
-                }
             } else {
                 this.input.selectedX = this.player.target.gridX;
                 this.input.selectedY = this.player.target.gridY;
@@ -135,22 +131,16 @@ export default class PlayerHandler {
         });
 
         this.player.onStep(() => {
-            if (this.player.hasNextStep()) {
+            if (this.player.hasNextStep())
                 this.entities.registerDuality(this.player);
-            }
 
-            if (
-                !this.camera.centered ||
-                this.camera.lockX ||
-                this.camera.lockY
-            ) {
+            if (!this.camera.centered || this.camera.lockX || this.camera.lockY)
                 this.checkBounds();
-            }
 
             this.socket.send(Packets.Movement, [
                 Packets.MovementOpcode.Step,
                 this.player.gridX,
-                this.player.gridY,
+                this.player.gridY
             ]);
         });
 
@@ -171,15 +161,13 @@ export default class PlayerHandler {
         this.player.onUpdateArmour((armourName, power) => {
             this.player.setSprite(this.game.getSprite(armourName));
 
-            if (this.game.interface && this.game.interface.profile) {
+            if (this.game.interface && this.game.interface.profile)
                 this.game.interface.profile.update();
-            }
         });
 
         this.player.onUpdateEquipment((type, power) => {
-            if (this.game.interface && this.game.interface.profile) {
+            if (this.game.interface && this.game.interface.profile)
                 this.game.interface.profile.update();
-            }
         });
     }
 
@@ -209,7 +197,7 @@ export default class PlayerHandler {
 
             this.socket.send(Packets.Movement, [
                 Packets.MovementOpcode.Zone,
-                direction,
+                direction
             ]);
 
             this.renderer.updateAnimatedTiles();
@@ -229,7 +217,8 @@ export default class PlayerHandler {
 
         if (this.isAttackable()) return Packets.TargetOpcode.Attack;
 
-        if (target.type === 'npc') return Packets.TargetOpcode.Talk;
+        if (target.type === 'npc' || target.type === 'chest')
+            return Packets.TargetOpcode.Talk;
 
         if (target.type === 'object') return Packets.TargetOpcode.Object;
 

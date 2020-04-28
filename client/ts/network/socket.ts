@@ -32,7 +32,7 @@ export default class Socket {
 
         this.connection = io(url, {
             forceNew: true,
-            reconnection: false,
+            reconnection: false
         });
 
         this.connection.on('connect_error', () => {
@@ -42,17 +42,16 @@ export default class Socket {
 
             this.game.app.toggleLogin(false);
 
-            if (this.game.isDebug()) {
+            if (this.game.isDebug())
                 this.game.app.sendError(
                     null,
                     `Couldn't connect to ${this.config.ip}:${this.config.port}`
                 );
-            } else {
+            else
                 this.game.app.sendError(
                     null,
                     'Could not connect to the game server.'
                 );
-            }
         });
 
         this.connection.on('connect', () => {
@@ -64,7 +63,7 @@ export default class Socket {
 
             this.connection.emit('client', {
                 gVer: this.config.version,
-                cType: 'HTML5',
+                cType: 'HTML5'
             });
         });
 
@@ -93,8 +92,7 @@ export default class Socket {
     send(packet, data?) {
         const json = JSON.stringify([packet, data]);
 
-        if (this.connection && this.connection.connected) {
+        if (this.connection && this.connection.connected)
             this.connection.send(json);
-        }
     }
 }

@@ -1,171 +1,184 @@
-import config from '../config';
 import Database from './database/database';
 import World from './game/world';
 import WebSocket from './network/websocket';
 import Parser from './util/parser';
+import config from '../config';
 
-let world: World;
+class Main {
+    webSocket: WebSocket;
+    database: Database;
+    parser: Parser;
+    world: World;
 
-function onWorldLoad() {
-    console.info('World has successfully been created.');
+    constructor() {
+        console.info(`Initializing ${config.name} game engine...`);
 
-    if (!config.allowConnectionsToggle) world.allowConnections = true;
+        this.webSocket = new WebSocket(config.host, config.port, config.gver);
+        this.database = new Database(config.database);
+        this.parser = new Parser();
+        this.world = null;
 
-    const host = config.host === '0.0.0.0' ? 'localhost' : config.host;
+        this.webSocket.onWebSocketReady(() => {
+            /**
+             * Initialize the world after we have finished loading
+             * the websocket.
+             */
 
-    console.info(`Connect locally via http://${host}:${config.port}`);
-}
+            const onWorldLoad = () => {
+                console.info('World has successfully been created.');
 
-function loadParser() {
-    // eslint-disable-next-line no-new
-    new Parser();
-}
+                if (!config.allowConnectionsToggle)
+                    this.world.allowConnections = true;
 
-function main() {
-    console.info(`Initializing ${config.name} game engine...`);
-
-    const webSocket = new WebSocket(config.host, config.port, config.gver);
-    const database = new Database(config.database);
-    const stdin = process.openStdin();
-
-    webSocket.onConnect((connection) => {
-        if (world.allowConnections) {
-            if (world.isFull()) {
+                const host =
+                    config.host === '0.0.0.0' ? 'localhost' : config.host;
                 console.info(
-                    'All the worlds are currently full. Please try again later.'
+                    `Connect locally via http://${host}:${config.port}`
                 );
+            };
 
-                connection.sendUTF8('full');
-                connection.close();
-            } else world.playerConnectCallback(connection);
-        } else {
-            connection.sendUTF8('disallowed');
-            connection.close();
-        }
-    });
+            this.world = new World(this.webSocket, this.getDatabase());
 
-    webSocket.onWebSocketReady(() => {
-        /**
-         * Initialize the world after we have finished loading
-         * the websocket.
-         */
+            this.world.load(onWorldLoad);
+        });
 
-        loadParser();
-
-        world = new World(webSocket, database.getDatabase());
-
-        world.load(onWorldLoad);
-    });
-
-    stdin.addListener('../../data', (data) => {
-        const message = data.toString().replace(/(\r\n|\n|\r)/gm, '');
-        const type = message.charAt(0);
-
-        if (type !== '/') return;
-
-        const blocks = message.substring(1).split(' ');
-        const command = blocks.shift();
-
-        if (!command) return;
-
-        switch (command) {
-            case 'players':
-                console.info(
-                    `There are a total of ${world.getPopulation()} player(s) logged in.`
-                );
-
-                break;
-
-            case 'registered':
-                world.database.registeredCount((count) => {
-                    console.info(`There are ${count} users registered.`);
-                });
-
-                break;
-
-            case 'deleteGuilds':
-                world.database.deleteGuilds();
-
-                break;
-
-            case 'kill':
-                const username = blocks.join(' ');
-
-                if (!world.playerInWorld(username)) {
-                    console.info('Player is not logged in.');
-
-                    return;
-                }
-
-                const player = world.getPlayerByName(username);
-
-                if (!player) {
-                    console.info('An error has occurred.');
-
-                    return;
-                }
-
-                world.kill(player);
-
-                break;
-
-            case 'resetPositions':
-                const newX = parseInt(blocks.shift());
-                const newY = parseInt(blocks.shift());
-
-                // x: 325, y: 87
-
-                if (!newX || !newY) {
+        this.webSocket.onConnect((connection) => {
+            if (this.world.allowConnections)
+                if (this.world.isFull()) {
                     console.info(
-                        'Invalid command parameters. Expected: /resetPositions <newX> <newY>'
+                        'All the worlds are currently full. Please try again later.'
                     );
 
-                    return;
+                    connection.sendUTF8('full');
+                    connection.close();
+                } else this.world.playerConnectCallback(connection);
+            else {
+                connection.sendUTF8('disallowed');
+                connection.close();
+            }
+        });
+
+        this.loadConsole();
+    }
+
+    loadConsole() {
+        const stdin = process.openStdin();
+
+        stdin.addListener('data', (data) => {
+            const message = data.toString().replace(/(\r\n|\n|\r)/gm, '');
+            const type = message.charAt(0);
+
+            if (type !== '/') return;
+
+            const blocks = message.substring(1).split(' ');
+            const command = blocks.shift();
+
+            if (!command) return;
+
+            switch (command) {
+                case 'players':
+                    console.info(
+                        `There are a total of ${this.getPopulation()} player(s) logged in.`
+                    );
+
+                    break;
+
+                case 'registered':
+                    this.world.database.registeredCount((count) => {
+                        console.info(`There are ${count} users registered.`);
+                    });
+
+                    break;
+
+                case 'deleteGuilds':
+                    this.world.database.deleteGuilds();
+
+                    break;
+
+                case 'kill': {
+                    const username = blocks.join(' ');
+
+                    if (!this.world.isOnline(username)) {
+                        console.info('Player is not logged in.');
+                        return;
+                    }
+
+                    const player = this.world.getPlayerByName(username);
+
+                    if (!player) {
+                        console.info('An error has occurred.');
+                        return;
+                    }
+
+                    this.world.kill(player);
+
+                    break;
                 }
 
-                /**
-                 * We are iterating through all of the users in the database
-                 * and resetting their position to the parameters inputted.
-                 * This is to be used when doing some game-breaking map
-                 * updates. This command is best used in tandem with the
-                 * `allowConnectionsToggle` to prevent users from logging
-                 * in.
-                 */
+                case 'resetPositions': {
+                    const newX = parseInt(blocks.shift());
+                    const newY = parseInt(blocks.shift());
 
-                world.database.resetPositions(newX, newY, (result) => {
-                    console.info(result);
-                });
+                    // x: 325, y: 87
 
-                break;
+                    if (!newX || !newY) {
+                        console.info(
+                            'Invalid command parameters. Expected: /resetPositions <newX> <newY>'
+                        );
+                        return;
+                    }
 
-            case 'allowConnections':
-                world.allowConnections = !world.allowConnections;
+                    /**
+                     * We are iterating through all of the users in the database
+                     * and resetting their position to the paramters inputted.
+                     * This is to be used when doing some game-breaking map
+                     * updates. This command is best used in tandem with the
+                     * `allowConnectionsToggle` to prevent users from logging
+                     * in.
+                     */
 
-                if (world.allowConnections) {
-                    console.info('Server is now allowing connections.');
-                } else console.info('The server is not allowing connections.');
+                    this.world.database.resetPositions(newX, newY, (result) => {
+                        console.info(result);
+                    });
 
-                break;
-            default:
-                console.error('Could not find command.');
-                break;
-        }
-    });
+                    break;
+                }
+
+                case 'allowConnections':
+                    this.world.allowConnections = !this.world.allowConnections;
+
+                    if (this.world.allowConnections)
+                        console.info('Server is now allowing connections.');
+                    else
+                        console.info('The server is not allowing connections.');
+
+                    break;
+            }
+        });
+    }
+
+    getDatabase() {
+        return this.database.getDatabase();
+    }
+
+    getPopulation() {
+        return this.world.getPopulation();
+    }
 }
 
-// if (typeof String.prototype.startsWith !== 'function') {
-//     String.prototype.startsWith = function(str) {
+// if (typeof String.prototype.startsWith !== 'function')
+//     String.prototype.startsWith = function (str) {
 //         return str.length > 0 && this.substring(0, str.length) === str;
 //     };
-// }
 
-// if (typeof String.prototype.endsWith !== 'function') {
-//     String.prototype.endsWith = function(str) {
+// if (typeof String.prototype.endsWith !== 'function')
+//     String.prototype.endsWith = function (str) {
 //         return (
 //             str.length > 0 &&
 //             this.substring(this.length - str.length, this.length) === str
 //         );
 //     };
-// }
 
-main();
+module.exports = Main;
+
+new Main();

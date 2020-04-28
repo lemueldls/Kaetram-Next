@@ -42,7 +42,7 @@ class Quest {
         if (this.hasItemReward()) {
             const item = this.getItemReward();
 
-            if (item) {
+            if (item)
                 if (this.hasInventorySpace(item.id, item.count)) {
                     this.player.inventory.add(item.id, item.count);
                 } else {
@@ -55,7 +55,6 @@ class Quest {
 
                     return;
                 }
-            }
         }
 
         this.setStage(9999);
@@ -63,7 +62,7 @@ class Quest {
         this.player.send(
             new Messages.Quest(Packets.QuestOpcode.Finish, {
                 id: this.id,
-                isQuest: true,
+                isQuest: true
             })
         );
 
@@ -100,22 +99,21 @@ class Quest {
 
         const opcode = pointer[0];
 
-        if (opcode === 4) {
+        if (opcode === 4)
             this.player.send(
                 new Messages.Pointer(opcode, {
                     id: Utils.generateRandomId(),
-                    button: pointer[1],
+                    button: pointer[1]
                 })
             );
-        } else {
+        else
             this.player.send(
                 new Messages.Pointer(opcode, {
                     id: Utils.generateRandomId(),
                     x: pointer[1],
-                    y: pointer[2],
+                    y: pointer[2]
                 })
             );
-        }
     }
 
     forceTalk(npc, message) {
@@ -126,7 +124,7 @@ class Quest {
         this.player.send(
             new Messages.NPC(Packets.NPCOpcode.Talk, {
                 id: npc.instance,
-                text: message,
+                text: message
             })
         );
     }
@@ -212,7 +210,7 @@ class Quest {
             name: this.getName(),
             description: this.getDescription(),
             stage: this.getStage(),
-            finished: this.isFinished(),
+            finished: this.isFinished()
         };
     }
 }

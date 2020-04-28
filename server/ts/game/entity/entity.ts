@@ -99,13 +99,13 @@ class Entity {
         return dx <= distance && dy <= distance;
     }
 
-    isAdjacent(entity) {
+    isSurrounding(entity) {
         return entity && this.getDistance(entity) < 2;
     }
 
     isNonDiagonal(entity) {
         return (
-            this.isAdjacent(entity) &&
+            this.isSurrounding(entity) &&
             !(entity.x !== this.x && entity.y !== this.y)
         );
     }
@@ -181,7 +181,7 @@ class Entity {
             string,
             name,
             x: this.x,
-            y: this.y,
+            y: this.y
         };
 
         if (this.specialState) data.nameColour = this.getNameColour();

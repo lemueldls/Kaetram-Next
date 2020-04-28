@@ -13,7 +13,7 @@ import Player from '../game/entity/character/player/player';
 class Quests {
     public quests: any;
 
-    public achievements: any;
+    public achievements: Achievement[];
 
     public achievementsReadyCallback: any;
 
@@ -34,11 +34,10 @@ class Quests {
         let questCount = 0;
 
         _.each(QuestData, (quest) => {
-            if (questCount === 0) {
+            if (questCount === 0)
                 this.quests[quest.id] = new Introduction(this.player, quest);
-            } else if (questCount === 1) {
+            else if (questCount === 1)
                 this.quests[quest.id] = new BulkySituation(this.player, quest);
-            }
 
             questCount++;
         });
@@ -60,21 +59,17 @@ class Quests {
             return;
         }
 
-        for (let id = 0; id < ids.length; id++) {
-            if (!isNaN(parseInt(ids[id])) && this.quests[id]) {
+        for (let id = 0; id < ids.length; id++)
+            if (!isNaN(parseInt(ids[id])) && this.quests[id])
                 this.quests[id].load(stages[id]);
-            }
-        }
 
         if (this.questsReadyCallback) this.questsReadyCallback();
     }
 
     updateAchievements(ids, progress) {
-        for (let id = 0; id < ids.length; id++) {
-            if (!isNaN(parseInt(ids[id])) && this.achievements[id]) {
-                this.achievements[id].setProgress(progress[id]);
-            }
-        }
+        for (let id = 0; id < ids.length; id++)
+            if (!isNaN(parseInt(ids[id])) && this.achievements[id])
+                this.achievements[id].setProgress(progress[id], true);
 
         if (this.achievementsReadyCallback) this.achievementsReadyCallback();
     }
@@ -99,7 +94,7 @@ class Quests {
         return {
             username: this.player.username,
             ids,
-            stages,
+            stages
         };
     }
 
@@ -115,7 +110,7 @@ class Quests {
         return {
             username: this.player.username,
             ids,
-            progress,
+            progress
         };
     }
 
@@ -127,7 +122,7 @@ class Quests {
         });
 
         return {
-            achievements,
+            achievements
         };
     }
 
@@ -139,7 +134,7 @@ class Quests {
         });
 
         return {
-            quests,
+            quests
         };
     }
 
@@ -158,11 +153,9 @@ class Quests {
     getQuestsCompleted() {
         let count = 0;
 
-        for (const id in this.quests) {
-            if (this.quests.hasOwnProperty(id)) {
+        for (const id in this.quests)
+            if (this.quests.hasOwnProperty(id))
                 if (this.quests[id].isFinished()) count++;
-            }
-        }
 
         return count;
     }
@@ -170,11 +163,9 @@ class Quests {
     getAchievementsCompleted() {
         let count = 0;
 
-        for (const id in this.achievements) {
-            if (this.achievements.hasOwnProperty(id)) {
+        for (const id in this.achievements)
+            if (this.achievements.hasOwnProperty(id))
                 if (this.achievements[id].isFinished()) count++;
-            }
-        }
 
         return count;
     }
@@ -194,40 +185,35 @@ class Quests {
          * follow the proper order.
          */
 
-        for (const id in this.quests) {
+        for (const id in this.quests)
             if (this.quests.hasOwnProperty(id)) {
                 const quest = this.quests[id];
 
                 if (quest.hasNPC(npc.id)) return quest;
             }
-        }
 
         return null;
     }
 
     getAchievementByNPC(npc) {
-        for (const id in this.achievements) {
-            if (this.achievements.hasOwnProperty(id)) {
+        for (const id in this.achievements)
+            if (this.achievements.hasOwnProperty(id))
                 if (
                     this.achievements[id].data.npc === npc.id &&
                     !this.achievements[id].isFinished()
                 ) {
                     return this.achievements[id];
                 }
-            }
-        }
 
         return null;
     }
 
     getAchievementByMob(mob) {
-        for (const id in this.achievements) {
-            if (this.achievements.hasOwnProperty(id)) {
+        for (const id in this.achievements)
+            if (this.achievements.hasOwnProperty(id))
                 if (this.achievements[id].data.mob === mob.id) {
                     return this.achievements[id];
                 }
-            }
-        }
 
         return null;
     }
@@ -235,13 +221,12 @@ class Quests {
     isQuestMob(mob) {
         if (mob.type !== 'mob') return false;
 
-        for (const id in this.quests) {
+        for (const id in this.quests)
             if (this.quests.hasOwnProperty(id)) {
                 const quest = this.quests[id];
 
                 if (!quest.isFinished() && quest.hasMob(mob.id)) return true;
             }
-        }
 
         return false;
     }
@@ -249,16 +234,14 @@ class Quests {
     isAchievementMob(mob) {
         if (mob.type !== 'mob') return false;
 
-        for (const id in this.achievements) {
-            if (this.achievements.hasOwnProperty(id)) {
+        for (const id in this.achievements)
+            if (this.achievements.hasOwnProperty(id))
                 if (
                     this.achievements[id].data.mob === mob.id &&
                     !this.achievements[id].isFinished()
                 ) {
                     return true;
                 }
-            }
-        }
 
         return false;
     }
@@ -266,13 +249,12 @@ class Quests {
     isQuestNPC(npc) {
         if (npc.type !== 'npc') return false;
 
-        for (const id in this.quests) {
+        for (const id in this.quests)
             if (this.quests.hasOwnProperty(id)) {
                 const quest = this.quests[id];
 
                 if (!quest.isFinished() && quest.hasNPC(npc.id)) return true;
             }
-        }
 
         return false;
     }
@@ -280,16 +262,14 @@ class Quests {
     isAchievementNPC(npc) {
         if (npc.type !== 'npc') return false;
 
-        for (const id in this.achievements) {
-            if (this.achievements.hasOwnProperty(id)) {
+        for (const id in this.achievements)
+            if (this.achievements.hasOwnProperty(id))
                 if (
                     this.achievements[id].data.npc === npc.id &&
                     !this.achievements[id].isFinished()
                 ) {
                     return true;
                 }
-            }
-        }
 
         return false;
     }

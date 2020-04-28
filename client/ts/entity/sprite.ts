@@ -35,7 +35,7 @@ export default class Sprite {
         this.offsetAngle = 0;
 
         this.hurtSprite = {
-            loaded: false,
+            loaded: false
         };
 
         this.loadSprite();
@@ -154,7 +154,7 @@ export default class Sprite {
                 offsetY: this.offsetY,
                 width: this.width,
                 height: this.height,
-                type: 'hurt',
+                type: 'hurt'
             };
         } catch (e) {
             console.error('Could not load hurt sprite.');

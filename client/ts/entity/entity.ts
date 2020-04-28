@@ -81,7 +81,7 @@ export default class Entity {
 
         this.renderingData = {
             scale: -1,
-            angle: 0,
+            angle: 0
         };
 
         this.loadDirty();
@@ -121,9 +121,8 @@ export default class Entity {
     }
 
     setSprite(sprite) {
-        if (!sprite || (this.sprite && this.sprite.name === sprite.name)) {
+        if (!sprite || (this.sprite && this.sprite.name === sprite.name))
             return;
-        }
 
         if (this.type === 'player') sprite.loadHurt = true;
 
@@ -161,9 +160,8 @@ export default class Entity {
         if (
             !this.spriteLoaded ||
             (this.currentAnimation && this.currentAnimation.name === name)
-        ) {
+        )
             return;
-        }
 
         const anim = this.getAnimationByName(name);
 

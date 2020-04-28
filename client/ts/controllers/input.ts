@@ -83,7 +83,7 @@ export default class Input {
 
         this.mouse = {
             x: 0,
-            y: 0,
+            y: 0
         };
 
         this.load();
@@ -199,6 +199,17 @@ export default class Input {
                 this.keyMovement = false;
 
                 this.setCoords(data);
+
+                if (window.event.ctrlKey) {
+                    console.info('Control key is pressed lmao');
+
+                    this.game.socket.send(Packets.Command, [
+                        Packets.CommandOpcode.CtrlClick,
+                        this.getCoords()
+                    ]);
+                    return;
+                }
+
                 this.click(this.getCoords());
 
                 break;
@@ -281,18 +292,16 @@ export default class Input {
             this.renderer.mobile &&
             this.chatHandler.input.is(':visible') &&
             this.chatHandler.input.val() === ''
-        ) {
+        )
             this.chatHandler.hideInput();
-        }
 
         if (this.map.isOutOfBounds(position.x, position.y)) return;
 
         if (
             (this.game.zoning && this.game.zoning.direction) ||
             player.disableAction
-        ) {
+        )
             return;
-        }
 
         this.getActions().hidePlayerActions();
 
@@ -325,21 +334,17 @@ export default class Input {
             ) {
                 this.game.socket.send(Packets.Target, [
                     Packets.TargetOpcode.Attack,
-                    entity.id,
+                    entity.id
                 ]);
                 player.lookAt(entity);
                 return;
             }
 
-            if (
-                entity.gridX === player.gridX &&
-                entity.gridY === player.gridY
-            ) {
+            if (entity.gridX === player.gridX && entity.gridY === player.gridY)
                 this.game.socket.send(Packets.Target, [
                     Packets.TargetOpcode.Attack,
-                    entity.id,
+                    entity.id
                 ]);
-            }
 
             if (entity.type === 'player') {
                 this.getActions().showPlayerActions(
@@ -364,15 +369,13 @@ export default class Input {
 
         if (this.newCursor !== this.cursor) this.cursor = this.newCursor;
 
-        if (this.newTargetColour !== this.targetColour) {
+        if (this.newTargetColour !== this.targetColour)
             this.targetColour = this.newTargetColour;
-        }
     }
 
     moveCursor() {
-        if (!this.renderer || this.renderer.mobile || !this.renderer.camera) {
+        if (!this.renderer || this.renderer.mobile || !this.renderer.camera)
             return;
-        }
 
         const position = this.getCoords();
         const player = this.getPlayer();
@@ -386,7 +389,7 @@ export default class Input {
 
         if (this.renderer.debugging) this.hoveringEntity = entity;
 
-        if (!entity || entity.id === player.id) {
+        if (!entity || entity.id === player.id)
             if (this.map.isObject(position.x, position.y)) {
                 this.setCursor(this.cursors.talk);
                 this.hovering = Modules.Hovering.Object;
@@ -394,7 +397,7 @@ export default class Input {
                 this.setCursor(this.cursors.hand);
                 this.hovering = null;
             }
-        } else {
+        else
             switch (entity.type) {
                 case 'item':
                 case 'chest':
@@ -420,7 +423,6 @@ export default class Input {
 
                     break;
             }
-        }
     }
 
     setPosition(x, y) {
@@ -478,7 +480,7 @@ export default class Input {
 
         return {
             x,
-            y,
+            y
         };
     }
 
@@ -498,14 +500,14 @@ export default class Input {
             dx: this.selectedX * 16 * superScale,
             dy: this.selectedY * 16 * superScale,
             dw: sprite.width * superScale,
-            dh: sprite.height * superScale,
+            dh: sprite.height * superScale
         });
     }
 
     updateFrozen(state) {
         this.game.socket.send(Packets.Movement, [
             Packets.MovementOpcode.Freeze,
-            state,
+            state
         ]);
     }
 

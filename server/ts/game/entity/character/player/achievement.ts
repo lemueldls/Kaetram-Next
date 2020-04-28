@@ -10,15 +10,15 @@ import Player from './player';
 class Achievement {
     public player: Player;
 
-    public progress: any;
+    public progress: number;
 
     public data: any;
 
-    public id: any;
+    public id: string;
 
-    public name: any;
+    public name: string;
 
-    public description: any;
+    public description: string;
 
     discovered: boolean;
 
@@ -49,7 +49,7 @@ class Achievement {
                 name: this.name,
                 progress: this.progress,
                 count: this.data.count,
-                isQuest: false,
+                isQuest: false
             })
         );
     }
@@ -60,7 +60,7 @@ class Achievement {
             this.player.send(
                 new Messages.NPC(Packets.NPCOpcode.Talk, {
                     id: npc.instance,
-                    text: npc.talk(this.data.text, this.player),
+                    text: npc.talk(this.data.text, this.player)
                 })
             );
 
@@ -83,7 +83,7 @@ class Achievement {
 
                 this.player.inventory.add({
                     id: this.data.item,
-                    count: this.data.itemCount,
+                    count: this.data.itemCount
                 });
 
                 break;
@@ -101,13 +101,12 @@ class Achievement {
             new Messages.Quest(Packets.QuestOpcode.Finish, {
                 id: this.id,
                 name: this.name,
-                isQuest: false,
+                isQuest: false
             })
         );
 
-        if (npc && this.player.npcTalkCallback) {
+        if (npc && this.player.npcTalkCallback)
             this.player.npcTalkCallback(npc);
-        }
     }
 
     update() {
@@ -131,10 +130,11 @@ class Achievement {
         return false;
     }
 
-    setProgress(progress) {
+    setProgress(progress, skipRegion) {
         this.progress = parseInt(progress);
 
-        if (this.data.rewardType === 'door') this.player.updateRegion();
+        if (this.data.rewardType === 'door' && !skipRegion)
+            this.player.updateRegion();
     }
 
     isStarted() {
@@ -153,7 +153,7 @@ class Achievement {
             description: this.description,
             count: this.data.count || 1,
             progress: this.progress,
-            finished: this.isFinished(),
+            finished: this.isFinished()
         };
     }
 }

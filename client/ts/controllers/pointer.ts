@@ -69,7 +69,7 @@ export default class Pointers {
             margin: 'inherit',
             'margin-top': `-${6 * this.scale}px`,
             top: `${10 * this.scale}px`,
-            background: `url("img/${this.scale}/pointer.png")`,
+            background: `url("img/${this.scale}/pointer.png")`
         });
     }
 
@@ -187,9 +187,8 @@ export default class Pointers {
                     break;
                 }
                 case Modules.Pointers.Position:
-                    if (pointer.x !== -1 && pointer.y !== -1) {
+                    if (pointer.x !== -1 && pointer.y !== -1)
                         this.set(pointer, pointer.x, pointer.y);
-                    }
 
                     break;
             }

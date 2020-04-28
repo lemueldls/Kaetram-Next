@@ -36,15 +36,14 @@ export default class Warp {
         for (let i = 1; i < 7; i++) {
             const warp = this.mapFrame.find(`#warp${i}`);
 
-            if (warp) {
+            if (warp)
                 warp.click((event) => {
                     this.hide();
 
                     this.game.socket.send(Packets.Warp, [
-                        event.currentTarget.id.substring(4),
+                        event.currentTarget.id.substring(4)
                     ]);
                 });
-            }
 
             this.warpCount++;
         }
@@ -57,7 +56,7 @@ export default class Warp {
 
         this.game.socket.send(Packets.Click, [
             'warp',
-            this.button.hasClass('active'),
+            this.button.hasClass('active')
         ]);
     }
 
@@ -85,9 +84,8 @@ export default class Warp {
     }
 
     clear() {
-        for (let i = 0; i < this.warpCount; i++) {
+        for (let i = 0; i < this.warpCount; i++)
             this.mapFrame.find(`#warp${i}`).unbind('click');
-        }
 
         if (this.close) this.close.unbind('click');
 

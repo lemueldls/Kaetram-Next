@@ -26,7 +26,7 @@ const initGame = () => {
     app.setGame(game);
 };
 
-const load = () => {
+const load = () =>
     $(() => {
         app = new App();
         body = $('body');
@@ -35,6 +35,5 @@ const load = () => {
         addClasses();
         initGame();
     });
-};
 
 load();

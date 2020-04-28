@@ -1,4 +1,5 @@
 import * as _ from 'underscore';
+import config from '../../config';
 
 /**
  * A guild contains the following information:
@@ -18,6 +19,9 @@ class Guilds {
 
     public world: any;
 
+    /**
+     * Creates an instance of Guilds.
+     */
     constructor(world) {
         this.world = world;
         this.creator = world.database.creator;
@@ -27,6 +31,11 @@ class Guilds {
 
         this.loaded = false;
 
+        if (config.offlineMode) {
+            console.debug('Server in offline mode, not loading guilds.');
+            return;
+        }
+
         this.load();
     }
 
@@ -35,7 +44,7 @@ class Guilds {
             _.each(guilds, (guild: any) => {
                 this.guilds[guild.name] = {
                     owner: guild.owner,
-                    members: guild.members,
+                    members: guild.members
                 };
             });
 
@@ -53,7 +62,7 @@ class Guilds {
         const newGuild = {
             name,
             owner: owner.username,
-            members: [owner.username],
+            members: [owner.username]
         };
 
         this.loader.getGuild(newGuild.name, (guild) => {
@@ -108,15 +117,13 @@ class Guilds {
     }
 
     hasGuild(owner) {
-        for (const i in this.guilds) {
-            if (this.guilds.hasOwnProperty(i)) {
+        for (const i in this.guilds)
+            if (Object.prototype.hasOwnProperty.call(this.guilds, i))
                 if (
                     this.guilds[i].owner.toLowerCase() === owner.toLowerCase()
                 ) {
                     return true;
                 }
-            }
-        }
 
         return false;
     }

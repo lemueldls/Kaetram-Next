@@ -30,18 +30,16 @@ class Container {
          * Fill each slot with manual data or the database
          */
 
-        if (ids.length !== this.slots.length) {
+        if (ids.length !== this.slots.length)
             console.error(`[${this.type}] Mismatch in container size.`);
-        }
 
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             this.slots[i].load(
                 ids[i],
                 counts[i],
                 abilities[i],
                 abilityLevels[i]
             );
-        }
     }
 
     loadEmpty() {
@@ -91,7 +89,7 @@ class Container {
         } else {
             let remainingItems = count;
 
-            for (let i = 0; i < this.slots.length; i++) {
+            for (let i = 0; i < this.slots.length; i++)
                 if (this.slots[i].id === id) {
                     const rSlot = this.slots[i];
 
@@ -107,7 +105,6 @@ class Container {
                         remainingItems -= available;
                     }
                 }
-            }
 
             if (remainingItems > 0 && this.hasSpace()) {
                 const rrSlot = this.slots[this.getEmptySlot()];
@@ -126,22 +123,16 @@ class Container {
 
         const maxStackSize = Items.maxStackSize(id);
 
-        if (
-            (this.type === 'Bank' || maxStackSize === -1) &&
-            this.contains(id)
-        ) {
+        if ((this.type === 'Bank' || maxStackSize === -1) && this.contains(id))
             return true;
-        }
 
         if (maxStackSize !== -1 && count > maxStackSize) return false;
 
         let remainingSpace = 0;
 
-        for (let i = 0; i < this.slots.length; i++) {
-            if (this.slots[i].id === id) {
+        for (let i = 0; i < this.slots.length; i++)
+            if (this.slots[i].id === id)
                 remainingSpace += maxStackSize - this.slots[i].count;
-            }
-        }
 
         return remainingSpace >= count;
     }
@@ -155,18 +146,17 @@ class Container {
 
         if (!slot) return false;
 
-        if (Items.isStackable(id)) {
+        if (Items.isStackable(id))
             if (count >= slot.count) slot.empty();
             else slot.decrement(count);
-        } else slot.empty();
+        else slot.empty();
 
         return true;
     }
 
     getSlot(id) {
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             if (this.slots[i].id === id) return this.slots[i];
-        }
 
         return null;
     }
@@ -186,9 +176,8 @@ class Container {
     containsSpaces(count) {
         const emptySpaces = [];
 
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             if (this.slots[i].id === -1) emptySpaces.push(this.slots[i]);
-        }
 
         return emptySpaces.length === count;
     }
@@ -198,9 +187,8 @@ class Container {
     }
 
     getEmptySlot() {
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             if (this.slots[i].id === -1) return i;
-        }
 
         return -1;
     }
@@ -211,9 +199,8 @@ class Container {
          * returns the first item found based on the id.
          */
 
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             if (this.slots[i].id === id) return i;
-        }
 
         return -1;
     }
@@ -246,7 +233,7 @@ class Container {
             ids: ids.slice(0, -1),
             counts: counts.slice(0, -1),
             abilities: abilities.slice(0, -1),
-            abilityLevels: abilityLevels.slice(0, -1),
+            abilityLevels: abilityLevels.slice(0, -1)
         };
     }
 }

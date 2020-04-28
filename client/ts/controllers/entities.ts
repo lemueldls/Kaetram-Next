@@ -59,10 +59,9 @@ export default class Entities {
 
         if (this.isPlayer(info.id)) return;
 
-        if (info.id in this.entities) {
+        if (info.id in this.entities)
             // Don't initialize things twice.
             return;
-        }
 
         switch (info.type) {
             case 'chest': {
@@ -153,17 +152,15 @@ export default class Entities {
                     if (
                         this.isPlayer(projectile.owner.id) ||
                         this.isPlayer(target.id)
-                    ) {
+                    )
                         this.game.socket.send(Packets.Projectile, [
                             Packets.ProjectileOpcode.Impact,
                             info.id,
-                            target.id,
+                            target.id
                         ]);
-                    }
 
-                    if (info.hitType === Modules.Hits.Explosive) {
+                    if (info.hitType === Modules.Hits.Explosive)
                         target.explosion = true;
-                    }
 
                     this.game.info.create(
                         Modules.Hits.Damage,
@@ -212,7 +209,7 @@ export default class Entities {
                     info.weapon,
                     info.pendant,
                     info.ring,
-                    info.boots,
+                    info.boots
                 ];
 
                 player.setHitPoints(hitPointsData[0]);
@@ -305,12 +302,10 @@ export default class Entities {
                 if (
                     ids.indexOf(parseInt(entity.id)) < 0 &&
                     entity.id !== this.game.player.id
-                ) {
+                )
                     this.removeEntity(entity);
-                }
-            } else if (entity.id !== this.game.player.id) {
+            } else if (entity.id !== this.game.player.id)
                 this.removeEntity(entity);
-            }
         });
 
         this.grids.resetPathingGrid();
@@ -318,9 +313,8 @@ export default class Entities {
 
     clearPlayers(exception) {
         _.each(this.entities, (entity) => {
-            if (entity.id !== exception.id && entity.type === 'player') {
+            if (entity.id !== exception.id && entity.type === 'player')
                 this.removeEntity(entity);
-            }
         });
 
         this.grids.resetPathingGrid();
@@ -335,9 +329,8 @@ export default class Entities {
         if (
             !(entity instanceof Item && entity.dropped) &&
             !this.renderer.isPortableDevice()
-        ) {
+        )
             entity.fadeIn(this.game.time);
-        }
     }
 
     removeItem(item) {
@@ -357,16 +350,14 @@ export default class Entities {
             entity.type === 'mob' ||
             entity.type === 'npc' ||
             entity.type === 'chest'
-        ) {
+        )
             this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 
-            /* if (entity.type !== 'player' || entity.nonPathable)
+        /* if (entity.type !== 'player' || entity.nonPathable)
                           this.grids.addToPathingGrid(entity.gridX, entity.gridY); */
-        }
 
-        if (entity.type === 'item') {
+        if (entity.type === 'item')
             this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
-        }
 
         this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
     }
@@ -378,14 +369,13 @@ export default class Entities {
 
         this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
 
-        if (entity.nextGridX > -1 && entity.nextGridY > -1) {
+        if (entity.nextGridX > -1 && entity.nextGridY > -1)
             this.grids.entityGrid[entity.nextGridY][entity.nextGridX][
                 entity.id
             ] = entity;
 
-            /* if (!(entity instanceof Player))
+        /* if (!(entity instanceof Player))
                         this.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1; */
-        }
     }
 
     unregisterPosition(entity) {
@@ -409,7 +399,7 @@ export default class Entities {
     }
 
     forEachEntityAround(x, y, radius, callback) {
-        for (let i = x - radius, maxI = x + radius; i <= maxI; i++) {
+        for (let i = x - radius, maxI = x + radius; i <= maxI; i++)
             for (let j = y - radius, maxJ = y + radius; j <= maxJ; j++) {
                 if (this.map.isOutOfBounds(i, j)) continue;
 
@@ -417,6 +407,5 @@ export default class Entities {
                     callback(entity);
                 });
             }
-        }
     }
 }

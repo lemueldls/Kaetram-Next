@@ -90,16 +90,16 @@ export default class Connection {
                     Packets.IntroOpcode.Register,
                     username,
                     password,
-                    email,
+                    email
                 ]);
-            } else if (this.app.isGuest()) {
+            } else if (this.app.isGuest())
                 this.socket.send(Packets.Intro, [
                     Packets.IntroOpcode.Guest,
                     'n',
                     'n',
-                    'n',
+                    'n'
                 ]);
-            } else {
+            else {
                 const loginInfo = this.app.loginFields;
                 const name = loginInfo[0].val();
                 const pass = loginInfo[1].val();
@@ -107,7 +107,7 @@ export default class Connection {
                 this.socket.send(Packets.Intro, [
                     Packets.IntroOpcode.Login,
                     name,
-                    pass,
+                    pass
                 ]);
 
                 if (this.game.hasRemember()) {
@@ -170,13 +170,12 @@ export default class Connection {
 
                     this.game.player.unequip(type);
 
-                    if (type === 'armour') {
+                    if (type === 'armour')
                         this.game.player.setSprite(
                             this.game.getSprite(
                                 this.game.player.getSpriteName()
                             )
                         );
-                    }
 
                     this.interface.profile.update();
 
@@ -235,7 +234,7 @@ export default class Connection {
 
             if (data.armour) entity.setSprite(this.game.getSprite(data.armour));
 
-            if (data.weapon) {
+            if (data.weapon)
                 entity.setEquipment(
                     data.weapon.type,
                     data.weapon.name,
@@ -245,7 +244,6 @@ export default class Connection {
                     data.weapon.abilityLevel,
                     data.weapon.power
                 );
-            }
 
             entity.attackRange = data.attackRange;
             entity.setPoison(data.poison);
@@ -297,11 +295,10 @@ export default class Connection {
 
                     if (info.state) pEntity.stop(false);
 
-                    if (opcode === Packets.MovementOpcode.Stunned) {
+                    if (opcode === Packets.MovementOpcode.Stunned)
                         pEntity.stunned = info.state;
-                    } else if (opcode === Packets.MovementOpcode.Freeze) {
+                    else if (opcode === Packets.MovementOpcode.Freeze)
                         pEntity.frozen = info.state;
-                    }
 
                     break;
                 }
@@ -419,9 +416,8 @@ export default class Connection {
             if (
                 this.game.player.hasTarget() &&
                 this.game.player.target.id === entity.id
-            ) {
+            )
                 this.game.player.removeTarget();
-            }
 
             this.entities.grids.removeFromPathingGrid(
                 entity.gridX,
@@ -431,12 +427,11 @@ export default class Connection {
             if (
                 entity.id !== this.game.player.id &&
                 this.game.player.getDistance(entity) < 5
-            ) {
+            )
                 this.audio.play(
                     Modules.AudioTypes.SFX,
                     `kill${Math.floor(Math.random() * 2 + 1)}`
                 );
-            }
 
             entity.hitPoints = 0;
 
@@ -463,13 +458,12 @@ export default class Connection {
                     if (
                         target.id === this.game.player.id ||
                         attacker.id === this.game.player.id
-                    ) {
+                    )
                         this.socket.send(Packets.Combat, [
                             Packets.CombatOpcode.Initiate,
                             attacker.id,
-                            target.id,
+                            target.id
                         ]);
-                    }
 
                     break;
 
@@ -495,12 +489,11 @@ export default class Connection {
                             if (
                                 attacker.id === this.game.player.id &&
                                 hit.damage > 0
-                            ) {
+                            )
                                 this.audio.play(
                                     Modules.AudioTypes.SFX,
                                     `hit${Math.floor(Math.random() * 2 + 1)}`
                                 );
-                            }
 
                             break;
                     }
@@ -522,9 +515,8 @@ export default class Connection {
                     attacker.triggerHealthBar();
                     target.triggerHealthBar();
 
-                    if (isPlayer && hit.damage > 0) {
+                    if (isPlayer && hit.damage > 0)
                         this.audio.play(Modules.AudioTypes.SFX, 'hurt');
-                    }
 
                     break;
                 }
@@ -539,9 +531,8 @@ export default class Connection {
                     break;
 
                 case Packets.CombatOpcode.Sync:
-                    if (target.x !== info.x || target.y !== info.y) {
+                    if (target.x !== info.x || target.y !== info.y)
                         target.go(info.x, info.y);
-                    }
 
                     break;
             }
@@ -583,12 +574,11 @@ export default class Connection {
                     this.game.player.hasTarget() &&
                     this.game.player.target.id === entity.id &&
                     this.input.overlay.updateCallback
-                ) {
+                )
                     this.input.overlay.updateCallback(
                         entity.id,
                         data.hitPoints
                     );
-                }
             }
 
             if (data.mana) entity.setMana(data.mana);
@@ -730,7 +720,7 @@ export default class Connection {
             }
         });
 
-        this.messages.onNotification((opcode, message) => {
+        this.messages.onNotification((opcode, message, colour) => {
             switch (opcode) {
                 case Packets.NotificationOpcode.Ok:
                     this.interface.displayNotify(message);
@@ -743,7 +733,7 @@ export default class Connection {
                     break;
 
                 case Packets.NotificationOpcode.Text: {
-                    this.input.chatHandler.add('WORLD', message);
+                    this.input.chatHandler.add('WORLD', message, colour);
 
                     break;
                 }
@@ -818,13 +808,12 @@ export default class Connection {
              */
 
             if (entity.id === this.game.player.id) {
-                if (info.id === this.game.player.id) {
+                if (info.id === this.game.player.id)
                     this.game.player.setExperience(
                         info.experience,
                         info.nextExperience,
                         info.prevExperience
                     );
-                }
 
                 this.info.create(
                     Modules.Hits.Experience,
@@ -872,7 +861,7 @@ export default class Connection {
 
                     let sound;
 
-                    if (isNPC) {
+                    if (isNPC)
                         if (!message) {
                             sound = 'npc-end';
                             this.bubble.destroy(info.id);
@@ -884,11 +873,10 @@ export default class Connection {
                             if (
                                 this.renderer.mobile &&
                                 this.renderer.autoCentre
-                            ) {
+                            )
                                 this.renderer.camera.centreOn(this.game.player);
-                            }
                         }
-                    } else {
+                    else {
                         this.bubble.create(info.id, message, this.time); // 5000?
                         this.bubble.setTo(entity);
                     }
@@ -1039,23 +1027,20 @@ export default class Connection {
                     break;
 
                 case Packets.ShopOpcode.Select:
-                    if (this.interface.shop.isShopOpen(info.id)) {
+                    if (this.interface.shop.isShopOpen(info.id))
                         this.interface.shop.move(info);
-                    }
 
                     break;
 
                 case Packets.ShopOpcode.Remove:
-                    if (this.interface.shop.isShopOpen(info.id)) {
+                    if (this.interface.shop.isShopOpen(info.id))
                         this.interface.shop.moveBack(info.index);
-                    }
 
                     break;
 
                 case Packets.ShopOpcode.Refresh:
-                    if (this.interface.shop.isShopOpen(info.id)) {
+                    if (this.interface.shop.isShopOpen(info.id))
                         this.interface.shop.update(info);
-                    }
 
                     break;
             }
@@ -1071,6 +1056,8 @@ export default class Connection {
         });
 
         this.messages.onRegion((opcode, info) => {
+            console.info(info);
+
             switch (opcode) {
                 case Packets.RegionOpcode.Render:
                     this.map.synchronize(info);
@@ -1105,9 +1092,9 @@ export default class Connection {
                 case Packets.OverlayOpcode.Set:
                     this.overlays.updateOverlay(info.image);
 
-                    if (!this.renderer.transitioning) {
+                    if (!this.renderer.transitioning)
                         this.renderer.updateDarkMask(info.colour);
-                    } else this.queueColour = info.colour;
+                    else this.queueColour = info.colour;
 
                     break;
 
@@ -1124,7 +1111,8 @@ export default class Connection {
                         info.distance,
                         info.diffuse,
                         'rgba(0,0,0,0.4)',
-                        true
+                        true,
+                        info.objects
                     );
 
                     break;

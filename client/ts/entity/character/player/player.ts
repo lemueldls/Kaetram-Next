@@ -158,17 +158,16 @@ export default class Player extends Character {
 
         this.poison = poison;
 
-        if (this.poison) {
+        if (this.poison)
             $('#health').css(
                 'background',
                 '-webkit-linear-gradient(right, #079231, #012b0c)'
             );
-        } else {
+        else
             $('#health').css(
                 'background',
                 '-webkit-linear-gradient(right, #ff0000, #ef5a5a)'
             );
-        }
     }
 
     getX() {
@@ -203,7 +202,7 @@ export default class Player extends Character {
     setEquipment(type, name, string, count, ability, abilityLevel, power) {
         switch (type) {
             case Modules.Equipment.Armour:
-                if (!this.armour) {
+                if (!this.armour)
                     this.armour = new Armour(
                         name,
                         string,
@@ -212,7 +211,7 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                } else {
+                else
                     this.armour.update(
                         name,
                         string,
@@ -221,16 +220,14 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                }
 
-                if (this.updateArmourCallback) {
+                if (this.updateArmourCallback)
                     this.updateArmourCallback(string, power);
-                }
 
                 break;
 
             case Modules.Equipment.Weapon:
-                if (!this.weapon) {
+                if (!this.weapon)
                     this.weapon = new Weapon(
                         name,
                         string,
@@ -239,7 +236,7 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                } else {
+                else
                     this.weapon.update(
                         name,
                         string,
@@ -248,18 +245,16 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                }
 
                 this.weapon.ranged = string.includes('bow');
 
-                if (this.updateWeaponCallback) {
+                if (this.updateWeaponCallback)
                     this.updateWeaponCallback(string, power);
-                }
 
                 break;
 
             case Modules.Equipment.Pendant:
-                if (!this.pendant) {
+                if (!this.pendant)
                     this.pendant = new Pendant(
                         name,
                         string,
@@ -268,7 +263,7 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                } else {
+                else
                     this.pendant.update(
                         name,
                         string,
@@ -277,12 +272,11 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                }
 
                 break;
 
             case Modules.Equipment.Ring:
-                if (!this.ring) {
+                if (!this.ring)
                     this.ring = new Ring(
                         name,
                         string,
@@ -291,7 +285,7 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                } else {
+                else
                     this.ring.update(
                         name,
                         string,
@@ -300,12 +294,11 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                }
 
                 break;
 
             case Modules.Equipment.Boots:
-                if (!this.boots) {
+                if (!this.boots)
                     this.boots = new Boots(
                         name,
                         string,
@@ -314,7 +307,7 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                } else {
+                else
                     this.boots.update(
                         name,
                         string,
@@ -323,14 +316,12 @@ export default class Player extends Character {
                         abilityLevel,
                         power
                     );
-                }
 
                 break;
         }
 
-        if (this.updateEquipmentCallback) {
+        if (this.updateEquipmentCallback)
             this.updateEquipmentCallback(type, power);
-        }
     }
 
     unequip(type) {
@@ -360,11 +351,10 @@ export default class Player extends Character {
     tempBlink() {
         this.blink(90);
 
-        if (!this.tempBlinkTimeout) {
+        if (!this.tempBlinkTimeout)
             this.tempBlinkTimeout = window.setTimeout(() => {
                 this.stopBlinking();
             }, 500);
-        }
     }
 
     onUpdateArmour(callback) {

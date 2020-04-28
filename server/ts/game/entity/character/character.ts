@@ -143,10 +143,10 @@ class Character extends Entity {
          * would become nonexistent.
          */
 
-        if (Mobs.hasCombatPlugin(this.id)) {
+        if (Mobs.hasCombatPlugin(this.id))
             // eslint-disable-next-line new-cap
             this.combat = new (Mobs.isNewCombatPlugin(this.id).default)(this);
-        } else this.combat = new Combat(this);
+        else this.combat = new Combat(this);
     }
 
     startHealing() {
@@ -179,9 +179,8 @@ class Character extends Entity {
     heal(amount) {
         this.setHitPoints(this.hitPoints + amount);
 
-        if (this.hitPoints >= this.maxHitPoints) {
+        if (this.hitPoints >= this.maxHitPoints)
             this.hitPoints = this.maxHitPoints;
-        }
     }
 
     isRanged() {

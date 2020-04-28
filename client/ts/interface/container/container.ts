@@ -30,9 +30,8 @@ export default class Container {
     }
 
     getEmptySlot() {
-        for (let i = 0; i < this.slots.length; i++) {
+        for (let i = 0; i < this.slots.length; i++)
             if (!this.slots[i].string) return i;
-        }
 
         return -1;
     }

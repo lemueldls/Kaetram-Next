@@ -103,9 +103,8 @@ export default class Messages {
     handleData(data) {
         const packet = data.shift();
 
-        if (this.messages[packet] && _.isFunction(this.messages[packet])) {
+        if (this.messages[packet] && _.isFunction(this.messages[packet]))
             this.messages[packet].call(this, data);
-        }
     }
 
     handleBulkData(data) {
@@ -238,9 +237,8 @@ export default class Messages {
         const equipType = data.shift();
         const equipInfo = data.shift();
 
-        if (this.equipmentCallback) {
+        if (this.equipmentCallback)
             this.equipmentCallback(equipType, equipInfo);
-        }
     }
 
     receiveEntityList(data) {
@@ -350,10 +348,10 @@ export default class Messages {
     receiveNotification(data) {
         const opcode = data.shift();
         const message = data.shift();
+        const colour = data.shift();
 
-        if (this.notificationCallback) {
-            this.notificationCallback(opcode, message);
-        }
+        if (this.notificationCallback)
+            this.notificationCallback(opcode, message, colour);
     }
 
     receiveBlink(data) {

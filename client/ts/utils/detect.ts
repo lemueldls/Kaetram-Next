@@ -90,14 +90,12 @@ Detect.isAppleDevice = () => {
         'iPod Simulator',
         'iPad',
         'iPhone',
-        'iPod',
+        'iPod'
     ];
 
-    if (navigator.platform) {
-        while (devices.length) {
+    if (navigator.platform)
+        while (devices.length)
             if (navigator.platform === devices.pop()) return true;
-        }
-    }
 
     return false;
 };
@@ -112,11 +110,11 @@ Detect.isOldApple = () => {
 };
 
 Detect.iOSVersion = () => {
-    if (window.MSStream) {
+    if (window.MSStream)
         // There is some iOS in Windows Phone...
         // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
         return '';
-    }
+
     const match = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
     let version;
 
@@ -124,7 +122,7 @@ Detect.iOSVersion = () => {
         version = [
             parseInt(match[1], 10),
             parseInt(match[2], 10),
-            parseInt(match[3] || '0', 10),
+            parseInt(match[3] || '0', 10)
         ];
         return version.join('.');
     }

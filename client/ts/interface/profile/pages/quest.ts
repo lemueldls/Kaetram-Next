@@ -103,11 +103,10 @@ export default class Quest extends Page {
 
             name.css('background', 'rgba(255, 10, 10, 0.3)');
 
-            if (quest.stage > 0 && quest.stage < 9999) {
+            if (quest.stage > 0 && quest.stage < 9999)
                 name.css('background', 'rgba(255, 255, 10, 0.4)');
-            } else if (quest.stage > 9998) {
+            else if (quest.stage > 9998)
                 name.css('background', 'rgba(10, 255, 10, 0.3)');
-            }
 
             if (quest.finished) this.finishedQuests++;
 
@@ -136,9 +135,9 @@ export default class Quest extends Page {
 
         if (!name) return;
 
-        if (!info.isQuest && info.count > 2) {
+        if (!info.isQuest && info.count > 2)
             name.text(`${info.name} ${info.progress - 1}/${info.count - 1}`);
-        } else name.text(info.name);
+        else name.text(info.name);
 
         name.css('background', 'rgba(255, 255, 10, 0.4)');
 
@@ -171,15 +170,13 @@ export default class Quest extends Page {
     }
 
     updateCount() {
-        if (this.finishedAchievement !== 0 && this.achievementsLength !== 0) {
+        if (this.finishedAchievement !== 0 && this.achievementsLength !== 0)
             this.achievementsCount.html(
                 `${this.finishedAchievements}/${this.achievementsLength}`
             );
-        }
 
-        if (this.finishedQuests !== 0 && this.questsLength !== 0) {
+        if (this.finishedQuests !== 0 && this.questsLength !== 0)
             this.questCount.html(`${this.finishedQuests}/${this.questsLength}`);
-        }
     }
 
     clear() {

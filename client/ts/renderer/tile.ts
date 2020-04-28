@@ -42,9 +42,9 @@ export default class Tile {
             this.update();
             this.lastTime = time;
 
-            if (this.animationIndex >= this.animationInfo.length - 1) {
+            if (this.animationIndex >= this.animationInfo.length - 1)
                 this.animationIndex = 0;
-            } else this.animationIndex++;
+            else this.animationIndex++;
         }
     }
 

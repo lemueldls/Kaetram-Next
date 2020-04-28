@@ -85,9 +85,8 @@ class MobHandler {
                 if (
                     this.mob.getPlateauLevel() !==
                     this.map.getPlateauLevel(newX, newY)
-                ) {
+                )
                     return;
-                }
 
                 // if (config.debug)
                 //    this.forceTalk('Yes hello, I am moving.');
@@ -101,9 +100,9 @@ class MobHandler {
                         {
                             id: this.mob.instance,
                             x: newX,
-                            y: newY,
+                            y: newY
                         }
-                    ),
+                    )
                 });
             }
         }, 5000);
@@ -121,8 +120,8 @@ class MobHandler {
             message: new Messages.NPC(Packets.NPCOpcode.Talk, {
                 id: this.mob.instance,
                 text: message,
-                nonNPC: true,
-            }),
+                nonNPC: true
+            })
         });
     }
 }

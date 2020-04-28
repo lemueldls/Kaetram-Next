@@ -44,9 +44,8 @@ export default class Pathfinder {
 
         path = AStar(this.grid, start, end, this.mode);
 
-        if (path.length === 0 && incomplete) {
+        if (path.length === 0 && incomplete)
             path = this.findIncomplete(start, end);
-        }
 
         return path;
     }

@@ -31,9 +31,9 @@ export default class Overlay {
     }
 
     updateOverlay(overlay) {
-        if (overlay in this.overlays) {
+        if (overlay in this.overlays)
             this.currentOverlay = this.overlays[overlay];
-        } else this.currentOverlay = overlay;
+        else this.currentOverlay = overlay;
     }
 
     getFog() {

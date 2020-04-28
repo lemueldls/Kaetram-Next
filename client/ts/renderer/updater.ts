@@ -51,9 +51,8 @@ export default class Updater {
                 if (animation) animation.update(this.game.time);
 
                 if (entity instanceof Character) {
-                    if (entity.movement && entity.movement.inProgress) {
+                    if (entity.movement && entity.movement.inProgress)
                         entity.movement.step(this.game.time);
-                    }
 
                     if (entity.hasPath() && !entity.movement.inProgress) {
                         const tick = Math.round(266 / entity.movementSpeed);
@@ -171,7 +170,7 @@ export default class Updater {
         const { player } = this.game;
         const position = {
             x: player.gridX,
-            y: player.gridY,
+            y: player.gridY
         };
 
         if (player.frozen) return;
@@ -187,9 +186,8 @@ export default class Updater {
     updateAnimations() {
         const target = this.input.targetAnimation;
 
-        if (target && this.input.selectedCellVisible) {
+        if (target && this.input.selectedCellVisible)
             target.update(this.game.time);
-        }
 
         if (!this.sprites) return;
 

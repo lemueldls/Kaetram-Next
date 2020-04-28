@@ -9,7 +9,7 @@ export const isInt = (n) => {
 export const TRANSITIONEND = 'transitionend webkitTransitionEnd oTransitionEnd';
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-if (!window.requestAnimationFrame) {
+if (!window.requestAnimationFrame)
     window.requestAnimationFrame = (() => {
         return (
             window.webkitRequestAnimationFrame ||
@@ -20,4 +20,3 @@ if (!window.requestAnimationFrame) {
                 window.setTimeout(callback, 17))
         );
     })();
-}

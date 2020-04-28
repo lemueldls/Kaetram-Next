@@ -26,9 +26,7 @@ export default class Countdown {
     }
 
     update(time) {
-        if (time - this.lastTime > this.updateTime) {
-            this.lastTime = time;
-        }
+        if (time - this.lastTime > this.updateTime) this.lastTime = time;
     }
 
     getStringFormat() {

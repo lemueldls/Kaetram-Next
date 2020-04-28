@@ -45,9 +45,9 @@ export default class Profile {
         });
 
         this.next.click(() => {
-            if (this.activeIndex + 1 < this.pages.length) {
+            if (this.activeIndex + 1 < this.pages.length)
                 this.setPage(this.activeIndex + 1);
-            } else this.next.removeClass('enabled');
+            else this.next.removeClass('enabled');
         });
 
         this.previous.click(() => {
@@ -64,9 +64,8 @@ export default class Profile {
 
         this.activePage = this.state;
 
-        if (this.activeIndex === 0 && this.activeIndex !== this.pages.length) {
+        if (this.activeIndex === 0 && this.activeIndex !== this.pages.length)
             this.next.addClass('enabled');
-        }
     }
 
     open() {
@@ -85,7 +84,7 @@ export default class Profile {
 
         this.game.socket.send(Packets.Click, [
             'profile',
-            this.button.hasClass('active'),
+            this.button.hasClass('active')
         ]);
     }
 
@@ -111,9 +110,9 @@ export default class Profile {
         this.activePage = page;
         this.activeIndex = index;
 
-        if (this.activeIndex + 1 === this.pages.length) {
+        if (this.activeIndex + 1 === this.pages.length)
             this.next.removeClass('enabled');
-        } else if (this.activeIndex === 0) this.previous.removeClass('enabled');
+        else if (this.activeIndex === 0) this.previous.removeClass('enabled');
         else {
             this.previous.addClass('enabled');
             this.next.addClass('enabled');

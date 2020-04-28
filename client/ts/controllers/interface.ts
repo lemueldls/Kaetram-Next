@@ -173,17 +173,15 @@ export default class Interface {
         if (
             this.profile &&
             (this.profile.isVisible() || this.profile.settings.isVisible())
-        ) {
+        )
             this.profile.hide();
-        }
 
         if (
             this.game.input &&
             this.game.input.chatHandler &&
             this.game.input.chatHandler.input.is(':visible')
-        ) {
+        )
             this.game.input.chatHandler.hideInput();
-        }
 
         if (this.bank && this.bank.isVisible()) this.bank.hide();
 

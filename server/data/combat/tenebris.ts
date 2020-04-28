@@ -35,14 +35,13 @@ class Tenebris extends Combat {
         this.respawnDelay = 95000;
 
         character.onDeath(() => {
-            if (this.isIllusion()) {
+            if (this.isIllusion())
                 if (!this.firstIllusionKilled) this.spawnTenbris();
                 else {
                     this.removeIllusions();
 
                     this.reset();
                 }
-            }
         });
 
         if (!this.isIllusion()) this.forceTalk('Who dares summon Tenebris!');
@@ -97,8 +96,8 @@ class Tenebris extends Combat {
                 id: this.character.instance,
                 x: this.character.x,
                 y: this.character.y,
-                withAnimation: true,
-            }),
+                withAnimation: true
+            })
         });
     }
 
@@ -143,8 +142,8 @@ class Tenebris extends Combat {
             message: new Messages.NPC(Packets.NPCOpcode.Talk, {
                 id: instance,
                 text: message,
-                nonNPC: true,
-            }),
+                nonNPC: true
+            })
         });
     }
 

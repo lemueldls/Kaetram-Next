@@ -15,6 +15,18 @@ class Minigame {
     getName() {
         return this.name;
     }
+
+    /**
+     * Used to mark if `player` is in a minigame instance.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    getState(_?) {
+        return {
+            id: this.id,
+            name: this.name,
+            team: this.team
+        };
+    }
 }
 
 export default Minigame;

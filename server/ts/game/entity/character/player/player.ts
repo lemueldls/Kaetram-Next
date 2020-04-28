@@ -193,6 +193,8 @@ class Player extends Character {
 
     public guild: any;
 
+    public minigame: any;
+
     public handler: Handler;
 
     public abilities: Abilities;
@@ -264,6 +266,7 @@ class Player extends Character {
         this.team = null;
         this.userAgent = null;
         this.guild = null;
+        this.minigame = null;
 
         this.disconnectTimeout = null;
         this.timeoutDuration = 1000 * 60 * 10; // 10 minutes
@@ -328,9 +331,8 @@ class Player extends Character {
         );
         this.mana = new Mana(data.mana, Formulas.getMaxMana(this.level));
 
-        if (data.invisibleIds) {
+        if (data.invisibleIds)
             this.invisiblesIds = data.invisibleIds.split(' ');
-        }
 
         this.userAgent = data.userAgent;
 
@@ -356,16 +358,14 @@ class Player extends Character {
 
             this.save();
 
-            if (config.debug) {
+            if (config.debug)
                 console.info(`Updated map version for ${this.username}`);
-            }
 
             return;
         }
 
-        if (regions.gameVersion === config.gver) {
+        if (regions.gameVersion === config.gver)
             this.regionsLoaded = regions.regions.split(',');
-        }
     }
 
     loadInventory() {
@@ -458,7 +458,8 @@ class Player extends Character {
             );
 
             /* Update region here because we receive quest info */
-            this.updateRegion();
+            if (this.questsLoaded)
+                this.updateRegion();
 
             this.achievementsLoaded = true;
         });
@@ -472,7 +473,8 @@ class Player extends Character {
             );
 
             /* Update region here because we receive quest info */
-            this.updateRegion();
+            if (this.achievementLoaded)
+                this.updateRegion();
 
             this.questsLoaded = true;
         });
@@ -486,9 +488,8 @@ class Player extends Character {
 
         if (this.x <= 0 || this.y <= 0) this.sendToSpawn();
 
-        if (this.hitPoints.getHitPoints() < 0) {
+        if (this.hitPoints.getHitPoints() < 0)
             this.hitPoints.setHitPoints(this.getMaxHitPoints());
-        }
 
         if (this.mana.getMana() < 0) this.mana.setMana(this.mana.getMaxMana());
 
@@ -511,7 +512,7 @@ class Player extends Character {
             pvpKills: this.pvpKills,
             pvpDeaths: this.pvpDeaths,
             orientation: this.orientation,
-            movementSpeed: this.getMovementSpeed(),
+            movementSpeed: this.getMovementSpeed()
         };
 
         this.regionPosition = [this.x, this.y];
@@ -526,16 +527,14 @@ class Player extends Character {
     }
 
     verifyRights() {
-        if (config.moderators.indexOf(this.username.toLowerCase()) > -1) {
+        if (config.moderators.indexOf(this.username.toLowerCase()) > -1)
             this.rights = 1;
-        }
 
         if (
             config.administrators.indexOf(this.username.toLowerCase()) > -1 ||
             config.offlineMode
-        ) {
+        )
             this.rights = 2;
-        }
     }
 
     addExperience(exp) {
@@ -557,7 +556,7 @@ class Player extends Character {
 
         const data: { [key: string]: any } = {
             id: this.instance,
-            level: this.level,
+            level: this.level
         };
 
         /**
@@ -606,7 +605,7 @@ class Player extends Character {
             new Messages.Heal({
                 id: this.instance,
                 type,
-                amount,
+                amount
             })
         );
     }
@@ -623,7 +622,7 @@ class Player extends Character {
             new Messages.Heal({
                 id: this.instance,
                 type,
-                amount,
+                amount
             })
         );
     }
@@ -644,11 +643,10 @@ class Player extends Character {
 
         if (!data || data === 'null') return;
 
-        if (config.debug) {
+        if (config.debug)
             console.info(
                 `Equipping item - ${[string, count, ability, abilityLevel]}`
             );
-        }
 
         if (Items.isArmour(string)) type = Modules.Equipment.Armour;
         else if (Items.isWeapon(string)) type = Modules.Equipment.Weapon;
@@ -658,9 +656,8 @@ class Player extends Character {
 
         switch (type) {
             case Modules.Equipment.Armour:
-                if (this.hasArmour() && this.armour.id !== 114) {
+                if (this.hasArmour() && this.armour.id !== 114)
                     this.inventory.add(this.armour.getItem());
-                }
 
                 this.setArmour(id, count, ability, abilityLevel, power);
                 break;
@@ -672,9 +669,8 @@ class Player extends Character {
                 break;
 
             case Modules.Equipment.Pendant:
-                if (this.hasPendant()) {
+                if (this.hasPendant())
                     this.inventory.add(this.pendant.getItem());
-                }
 
                 this.setPendant(id, count, ability, abilityLevel, power);
                 break;
@@ -700,7 +696,7 @@ class Player extends Character {
                 count,
                 ability,
                 abilityLevel,
-                power,
+                power
             })
         );
 
@@ -726,9 +722,8 @@ class Player extends Character {
     canEquip(string) {
         let requirement = Items.getLevelRequirement(string);
 
-        if (requirement > Constants.MAX_LEVEL) {
+        if (requirement > Constants.MAX_LEVEL)
             requirement = Constants.MAX_LEVEL;
-        }
 
         if (requirement > this.level) {
             this.notify(
@@ -758,7 +753,7 @@ class Player extends Character {
                 id: this.instance,
                 x,
                 y,
-                withAnimation: animate,
+                withAnimation: animate
             })
         );
 
@@ -806,7 +801,7 @@ class Player extends Character {
             this.send(
                 new Messages.Overlay(Packets.OverlayOpcode.Set, {
                     image: overlay.fog ? overlay.fog : 'empty',
-                    colour: `rgba(0,0,0,${overlay.darkness})`,
+                    colour: `rgba(0,0,0,${overlay.darkness})`
                 })
             );
         } else this.send(new Messages.Overlay(Packets.OverlayOpcode.Remove));
@@ -817,7 +812,7 @@ class Player extends Character {
 
         this.cameraArea = camera;
 
-        if (camera) {
+        if (camera)
             switch (camera.type) {
                 case 'lockX':
                     this.send(new Messages.Camera(Packets.CameraOpcode.LockX));
@@ -831,7 +826,7 @@ class Player extends Character {
                     this.send(new Messages.Camera(Packets.CameraOpcode.Player));
                     break;
             }
-        } else this.send(new Messages.Camera(Packets.CameraOpcode.FreeFlow));
+        else this.send(new Messages.Camera(Packets.CameraOpcode.FreeFlow));
     }
 
     updateMusic(song) {
@@ -980,7 +975,7 @@ class Player extends Character {
     guessPosition(x, y) {
         this.potentialPosition = {
             x,
-            y,
+            y
         };
     }
 
@@ -1001,7 +996,7 @@ class Player extends Character {
                 x,
                 y,
                 forced: false,
-                teleport: false,
+                teleport: false
             }),
             this.instance
         );
@@ -1010,10 +1005,9 @@ class Player extends Character {
     setOrientation(orientation) {
         this.orientation = orientation;
 
-        if (this.orientationCallback) {
+        if (this.orientationCallback)
             // Will be necessary in the future.
             this.orientationCallback();
-        }
     }
 
     setFuturePosition(x, y) {
@@ -1025,7 +1019,7 @@ class Player extends Character {
 
         this.futurePosition = {
             x,
-            y,
+            y
         };
     }
 
@@ -1133,7 +1127,7 @@ class Player extends Character {
             weapon: this.weapon.getData(),
             pendant: this.pendant.getData(),
             ring: this.ring.getData(),
-            boots: this.boots.getData(),
+            boots: this.boots.getData()
         };
     }
 
@@ -1157,12 +1151,11 @@ class Player extends Character {
         const isSpecial =
             100 - this.weapon.abilityLevel < Utils.randomInt(0, 100);
 
-        if (!this.hasSpecialAttack() || !isSpecial) {
+        if (!this.hasSpecialAttack() || !isSpecial)
             return new Hit(Modules.Hits.Damage, defaultDamage);
-        }
 
         switch (this.weapon.ability) {
-            case Modules.Enchantment.Critical:
+            case Modules.Enchantment.Critical: {
                 /**
                  * Still experimental, not sure how likely it is that you're
                  * gonna do a critical strike. I just do not want it getting
@@ -1173,6 +1166,7 @@ class Player extends Character {
                 const damage = defaultDamage * multiplier;
 
                 return new Hit(Modules.Hits.Critical, damage);
+            }
 
             case Modules.Enchantment.Stun:
                 return new Hit(Modules.Hits.Stun, defaultDamage);
@@ -1203,14 +1197,14 @@ class Player extends Character {
     send(message) {
         this.world.push(Packets.PushOpcode.Player, {
             player: this,
-            message,
+            message
         });
     }
 
     sendToRegion(message) {
         this.world.push(Packets.PushOpcode.Region, {
             regionId: this.region,
-            message,
+            message
         });
     }
 
@@ -1218,7 +1212,7 @@ class Player extends Character {
         this.world.push(Packets.PushOpcode.Regions, {
             regionId,
             message,
-            ignoreId,
+            ignoreId
         });
     }
 
@@ -1228,7 +1222,7 @@ class Player extends Character {
             weapon: this.weapon.getData(),
             pendant: this.pendant.getData(),
             ring: this.ring.getData(),
-            boots: this.boots.getData(),
+            boots: this.boots.getData()
         };
 
         this.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
@@ -1239,6 +1233,26 @@ class Player extends Character {
 
         this.x = position.x;
         this.y = position.y;
+    }
+
+    sendMessage(playerName, message) {
+        if (!this.world.isOnline(playerName)) {
+            this.notify(
+                `@aquamarine@${playerName}@crimson@ is not online.`,
+                'crimson'
+            );
+            return;
+        }
+
+        const otherPlayer = this.world.getPlayerByName(playerName);
+        const oFormattedName = Utils.formatUsername(playerName); // Formated username of the other player.
+        const formattedName = Utils.formatUsername(this.username); // Formatted username of current instance.
+
+        otherPlayer.notify(
+            `[From ${oFormattedName}]: ${message}`,
+            'aquamarine'
+        );
+        this.notify(`[To ${formattedName}]: ${message}`, 'aquamarine');
     }
 
     sync() {
@@ -1260,7 +1274,7 @@ class Player extends Character {
             armour: this.armour.getString(),
             weapon: this.weapon.getData(),
             poison: !!this.poison,
-            movementSpeed: this.getMovementSpeed(),
+            movementSpeed: this.getMovementSpeed()
         };
 
         this.sendToAdjacentRegions(this.region, new Messages.Sync(info));
@@ -1268,11 +1282,17 @@ class Player extends Character {
         this.save();
     }
 
-    notify(message) {
+    notify(message, colour?) {
         if (!message) return;
 
+        message = Utils.parseMessage(message);
+
         this.send(
-            new Messages.Notification(Packets.NotificationOpcode.Text, message)
+            new Messages.Notification(
+                Packets.NotificationOpcode.Text,
+                message,
+                colour
+            )
         );
     }
 
@@ -1286,7 +1306,7 @@ class Player extends Character {
         this.send(
             new Messages.Movement(Packets.MovementOpcode.Stop, {
                 instance: this.instance,
-                force,
+                force
             })
         );
     }
@@ -1354,9 +1374,8 @@ class Player extends Character {
     save() {
         if (config.offlineMode || this.isGuest) return;
 
-        if ((!this.questsLoaded || !this.achievementsLoaded) && !this.new) {
+        if ((!this.questsLoaded || !this.achievementsLoaded) && !this.new)
             return;
-        }
 
         this.database.creator.save(this);
     }

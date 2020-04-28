@@ -47,17 +47,16 @@ export default class Bank {
 
             slot.css({
                 'margin-right': `${2 * this.getScale()}px`,
-                'margin-bottom': `${4 * this.getScale()}px`,
+                'margin-bottom': `${4 * this.getScale()}px`
             });
 
             const image = $(`<div id="bankImage${i}" class="bankImage"></div>`);
 
-            if (item.string) {
+            if (item.string)
                 image.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), item.string)
                 );
-            }
 
             slot.click((event) => {
                 this.click('bank', event);
@@ -67,13 +66,13 @@ export default class Bank {
 
             let { count } = item;
 
-            if (count > 999999) {
+            if (count > 999999)
                 count = `${count
                     .toString()
                     .substring(0, count.toString().length - 6)}M`;
-            } else if (count > 9999) {
+            else if (count > 9999)
                 count = `${count.toString().substring(0, 2)}K`;
-            } else if (count === 1) count = '';
+            else if (count === 1) count = '';
 
             slot.append(image);
             slot.append(
@@ -83,7 +82,7 @@ export default class Bank {
             slot.find(`#bankItemCount${i}`).css({
                 'font-size': `${4 * this.getScale()}px`,
                 'margin-top': '0',
-                'margin-left': '0',
+                'margin-left': '0'
             });
 
             const bankListItem = $('<li></li>');
@@ -101,19 +100,18 @@ export default class Bank {
 
             iSlot.css({
                 'margin-right': `${3 * this.getScale()}px`,
-                'margin-bottom': `${6 * this.getScale()}px`,
+                'margin-bottom': `${6 * this.getScale()}px`
             });
 
             const slotImage = $(
                 `<div id="inventoryImage${j}" class="bankImage"></div>`
             );
 
-            if (iItem.string) {
+            if (iItem.string)
                 slotImage.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), iItem.string)
                 );
-            }
 
             iSlot.click((event) => {
                 this.click('inventory', event);
@@ -124,13 +122,13 @@ export default class Bank {
             const { count } = iItem;
             let size: string;
 
-            if (count > 999999) {
+            if (count > 999999)
                 size = `${count
                     .toString()
                     .substring(0, count.toString().length - 6)}M`;
-            } else if (count > 9999) {
+            else if (count > 9999)
                 size = `${count.toString().substring(0, 2)}K`;
-            } else if (count === 1) size = '';
+            else if (count === 1) size = '';
 
             iSlot.append(slotImage);
             iSlot.append(
@@ -139,7 +137,7 @@ export default class Bank {
 
             iSlot.find(`#inventoryItemCount${j}`).css({
                 'margin-top': '0',
-                'margin-left': '0',
+                'margin-left': '0'
             });
 
             const inventoryListItem = $('<li></li>');
@@ -161,22 +159,21 @@ export default class Bank {
 
             bankSlot.css({
                 'margin-right': `${2 * this.getScale()}px`,
-                'margin-bottom': `${4 * this.getScale()}px`,
+                'margin-bottom': `${4 * this.getScale()}px`
             });
 
             bankSlot.find(`#bankItemCount${i}`).css({
                 'font-size': `${4 * this.getScale()}px`,
                 'margin-top': '0',
-                'margin-left': '0',
+                'margin-left': '0'
             });
 
             if (Detect.isMobile()) image.css('background-size', '600%');
-            else {
+            else
                 image.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), slot.string)
                 );
-            }
         }
 
         for (let j = 0; j < inventoryList.length; j++) {
@@ -188,16 +185,15 @@ export default class Bank {
 
             inventorySlot.css({
                 'margin-right': `${3 * this.getScale()}px`,
-                'margin-bottom': `${6 * this.getScale()}px`,
+                'margin-bottom': `${6 * this.getScale()}px`
             });
 
             if (Detect.isMobile()) iImage.css('background-size', '600%');
-            else {
+            else
                 iImage.css(
                     'background-image',
                     this.container.getImageFormat(this.getScale(), iSlot.string)
                 );
-            }
         }
     }
 
@@ -208,7 +204,7 @@ export default class Bank {
         this.game.socket.send(Packets.Bank, [
             Packets.BankOpcode.Select,
             type,
-            index,
+            index
         ]);
     }
 
@@ -218,9 +214,8 @@ export default class Bank {
 
         if (!item || !slot) return;
 
-        if (slot.isEmpty()) {
+        if (slot.isEmpty())
             slot.load(info.string, info.count, info.ability, info.abilityLevel);
-        }
 
         slot.setCount(info.count);
 
@@ -271,9 +266,8 @@ export default class Bank {
 
         if (Detect.isMobile()) image.css('background-size', '600%');
 
-        if (info.count > 1) {
+        if (info.count > 1)
             slot.find(`#inventoryItemCount${info.index}`).text(info.count);
-        }
     }
 
     removeInventory(info) {
@@ -291,9 +285,9 @@ export default class Bank {
         const diff = itemContainer.count - info.count;
 
         if (diff > 1) slot.find(`#inventoryItemCount${info.index}`).text(diff);
-        else if (diff === 1) {
+        else if (diff === 1)
             slot.find(`#inventoryItemCount${info.index}`).text('');
-        } else {
+        else {
             slot.find(`#inventoryImage${info.index}`).css(
                 'background-image',
                 ''

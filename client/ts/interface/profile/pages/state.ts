@@ -44,7 +44,7 @@ export default class State extends Page {
             this.armourSlot,
             this.pendantSlot,
             this.ringSlot,
-            this.bootsSlot,
+            this.bootsSlot
         ];
 
         this.loaded = false;
@@ -70,35 +70,35 @@ export default class State extends Page {
         this.weaponSlot.click(() => {
             this.game.socket.send(Packets.Equipment, [
                 Packets.EquipmentOpcode.Unequip,
-                'weapon',
+                'weapon'
             ]);
         });
 
         this.armourSlot.click(() => {
             this.game.socket.send(Packets.Equipment, [
                 Packets.EquipmentOpcode.Unequip,
-                'armour',
+                'armour'
             ]);
         });
 
         this.pendantSlot.click(() => {
             this.game.socket.send(Packets.Equipment, [
                 Packets.EquipmentOpcode.Unequip,
-                'pendant',
+                'pendant'
             ]);
         });
 
         this.ringSlot.click(() => {
             this.game.socket.send(Packets.Equipment, [
                 Packets.EquipmentOpcode.Unequip,
-                'ring',
+                'ring'
             ]);
         });
 
         this.bootsSlot.click(() => {
             this.game.socket.send(Packets.Equipment, [
                 Packets.EquipmentOpcode.Unequip,
-                'boots',
+                'boots'
             ]);
         });
     }
@@ -134,13 +134,11 @@ export default class State extends Page {
         this.level.text(this.player.level);
         this.experience.text(this.player.experience);
 
-        if (this.player.weapon.power) {
+        if (this.player.weapon.power)
             this.weaponSlotInfo.text(`+${this.player.weapon.power}`);
-        }
 
-        if (this.player.armour.power) {
+        if (this.player.armour.power)
             this.armourSlotInfo.text(`+${this.player.armour.power}`);
-        }
 
         this.loadSlots();
     }

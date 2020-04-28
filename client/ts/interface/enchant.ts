@@ -78,9 +78,8 @@ export default class Enchant {
                     image.css('background-image')
                 );
 
-                if (Detect.isMobile()) {
+                if (Detect.isMobile())
                     this.selectedItem.css('background-size', '600%');
-                }
 
                 break;
 
@@ -90,9 +89,8 @@ export default class Enchant {
                     image.css('background-image')
                 );
 
-                if (Detect.isMobile()) {
+                if (Detect.isMobile())
                     this.selectedShards.css('background-size', '600%');
-                }
 
                 const { count } = this.getItemSlot(index);
 
@@ -116,12 +114,11 @@ export default class Enchant {
 
         switch (type) {
             case 'item':
-                if (count > 0) {
+                if (count > 0)
                     image.css(
                         'background-image',
                         this.selectedItem.css('background-image')
                     );
-                }
 
                 if (count > 1) itemCount.text(count);
 
@@ -130,12 +127,11 @@ export default class Enchant {
                 break;
 
             case 'shards':
-                if (count > 0) {
+                if (count > 0)
                     image.css(
                         'background-image',
                         this.selectedShards.css('background-image')
                     );
-                }
 
                 if (count > 1) itemCount.text(count);
 
@@ -154,14 +150,14 @@ export default class Enchant {
     select(event) {
         this.game.socket.send(Packets.Enchant, [
             Packets.EnchantOpcode.Select,
-            event.currentTarget.id.substring(17),
+            event.currentTarget.id.substring(17)
         ]);
     }
 
     remove(type) {
         this.game.socket.send(Packets.Enchant, [
             Packets.EnchantOpcode.Remove,
-            type,
+            type
         ]);
     }
 

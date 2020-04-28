@@ -78,9 +78,8 @@ class QueenAnt extends Combat {
 
             const listCopy = this.minions.slice();
 
-            for (let i = 0; i < listCopy.length; i++) {
+            for (let i = 0; i < listCopy.length; i++)
                 this.world.kill(listCopy[i]);
-            }
         });
 
         this.character.onReturn(() => {
@@ -130,11 +129,10 @@ class QueenAnt extends Combat {
     spawnMinions() {
         this.lastSpawn = new Date().getTime();
 
-        for (let i = 0; i < this.minionCount; i++) {
+        for (let i = 0; i < this.minionCount; i++)
             this.minions.push(
                 this.world.spawnMob(13, this.character.x, this.character.y)
             );
-        }
 
         _.each(this.minions, (minion) => {
             minion.aggressive = true;
@@ -156,9 +154,8 @@ class QueenAnt extends Combat {
         _.each(this.minions, (minion) => {
             const randomTarget = this.getRandomTarget();
 
-            if (!minion.hasTarget() && randomTarget) {
+            if (!minion.hasTarget() && randomTarget)
                 minion.combat.begin(randomTarget);
-            }
         });
     }
 
@@ -191,8 +188,8 @@ class QueenAnt extends Combat {
             regionId: this.character.region,
             message: new Messages.NPC(Packets.NPCOpcode.Countdown, {
                 id: this.character.instance,
-                countdown: count,
-            }),
+                countdown: count
+            })
         });
     }
 

@@ -41,7 +41,7 @@ export default class Audio {
             village: false,
             beach: false,
             spookyship: false,
-            meadowofthepast: false,
+            meadowofthepast: false
         };
 
         this.sounds = {
@@ -61,7 +61,7 @@ export default class Audio {
             teleport: false,
             chest: false,
             npc: false,
-            'npc-end': false,
+            'npc-end': false
         };
     }
 
@@ -109,9 +109,8 @@ export default class Audio {
             !this.isEnabled() ||
             !this.fileExists(name) ||
             this.game.player.dead
-        ) {
+        )
             return;
-        }
 
         if (Detect.isSafari()) return;
 
@@ -277,7 +276,7 @@ export default class Audio {
     getMusic(name: string) {
         return {
             sound: this.get(name),
-            name,
+            name
         };
     }
 

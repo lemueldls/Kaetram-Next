@@ -124,8 +124,8 @@ export default (() => {
                 y: start[1],
                 f: 0,
                 g: 0,
-                v: start[0] + start[1] * cols,
-            },
+                v: start[0] + start[1] * cols
+            }
         ];
         let length = 1;
         let f2 = Math.max;
@@ -159,19 +159,17 @@ export default (() => {
         find || (find = diagonalSuccessorsFree);
 
         do {
-            if (length > 100) {
+            if (length > 100)
                 // Don't let it get too crazy.
                 return [];
-            }
 
             max = limit;
             min = 0;
-            for (i = 0; i < length; ++i) {
+            for (i = 0; i < length; ++i)
                 if ((f = open[i].f) < max) {
                     max = f;
                     min = i;
                 }
-            }
 
             [current] = open.splice(min, 1);
             if (current.v !== end.v) {
@@ -194,9 +192,8 @@ export default (() => {
             } else {
                 i = 0;
                 length = 0;
-                do {
-                    result[i++] = [current.x, current.y];
-                } while ((current = current.p));
+                do result[i++] = [current.x, current.y];
+                while ((current = current.p));
                 result.reverse();
             }
         } while (length);

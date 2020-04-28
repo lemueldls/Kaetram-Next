@@ -157,9 +157,8 @@ export default class Character extends Entity {
         const o = ['atk', 'walk', 'idle'];
         const { orientation } = this;
 
-        if (this.currentAnimation && this.currentAnimation.name === 'death') {
+        if (this.currentAnimation && this.currentAnimation.name === 'death')
             return;
-        }
 
         this.spriteFlipX = false;
         this.spriteFlipY = false;
@@ -177,15 +176,14 @@ export default class Character extends Entity {
     }
 
     lookAt(character) {
-        if (character.gridX > this.gridX) {
+        if (character.gridX > this.gridX)
             this.setOrientation(Modules.Orientation.Right);
-        } else if (character.gridX < this.gridX) {
+        else if (character.gridX < this.gridX)
             this.setOrientation(Modules.Orientation.Left);
-        } else if (character.gridY > this.gridY) {
+        else if (character.gridY > this.gridY)
             this.setOrientation(Modules.Orientation.Down);
-        } else if (character.gridY < this.gridY) {
+        else if (character.gridY < this.gridY)
             this.setOrientation(Modules.Orientation.Up);
-        }
 
         this.idle();
     }
@@ -292,7 +290,7 @@ export default class Character extends Entity {
     proceed(x, y) {
         this.newDestination = {
             x,
-            y,
+            y
         };
     }
 
@@ -310,9 +308,8 @@ export default class Character extends Entity {
         let y;
         let path;
 
-        if (this.step % 2 === 0 && this.secondStepCallback) {
+        if (this.step % 2 === 0 && this.secondStepCallback)
             this.secondStepCallback();
-        }
 
         this.prevGridX = this.gridX;
         this.prevGridY = this.gridY;
@@ -324,9 +321,8 @@ export default class Character extends Entity {
         this.updateGridPosition();
 
         if (!this.interrupted) {
-            if (this.hasNextStep()) {
+            if (this.hasNextStep())
                 [this.nextGridX, this.nextGridY] = this.path[this.step + 1];
-            }
 
             if (this.stepCallback) this.stepCallback();
 
@@ -355,9 +351,8 @@ export default class Character extends Entity {
             this.path = null;
             this.idle();
 
-            if (this.stopPathingCallback) {
+            if (this.stopPathingCallback)
                 this.stopPathingCallback(this.gridX, this.gridY, this.forced);
-            }
 
             if (this.forced) this.forced = false;
         }
@@ -366,21 +361,17 @@ export default class Character extends Entity {
     updateMovement() {
         const { step } = this;
 
-        if (this.path[step][0] < this.path[step - 1][0]) {
+        if (this.path[step][0] < this.path[step - 1][0])
             this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
-        }
 
-        if (this.path[step][0] > this.path[step - 1][0]) {
+        if (this.path[step][0] > this.path[step - 1][0])
             this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
-        }
 
-        if (this.path[step][1] < this.path[step - 1][1]) {
+        if (this.path[step][1] < this.path[step - 1][1])
             this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
-        }
 
-        if (this.path[step][1] > this.path[step - 1][1]) {
+        if (this.path[step][1] > this.path[step - 1][1])
             this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
-        }
     }
 
     /**
@@ -403,7 +394,7 @@ export default class Character extends Entity {
     move(x, y, forced?) {
         this.destination = {
             gridX: x,
-            gridY: y,
+            gridY: y
         };
 
         this.adjacentTiles = {};
@@ -565,7 +556,7 @@ export default class Character extends Entity {
             id: `${x}-${y}`,
             type: 'object',
             gridX: x,
-            gridY: y,
+            gridY: y
         });
     }
 
@@ -580,9 +571,8 @@ export default class Character extends Entity {
     setMaxHitPoints(maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
 
-        if (this.maxHitPointsCallback) {
+        if (this.maxHitPointsCallback)
             this.maxHitPointsCallback(this.maxHitPoints);
-        }
     }
 
     setOrientation(orientation) {
