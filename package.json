@@ -155,7 +155,7 @@
         "tslint-config-prettier": "^1.18.0",
         "tslint-plugin-prettier": "^2.3.0",
         "typedoc": "^0.17.6",
-        "typescript": "~3.8.3",
+        "typescript": "~3.9.5",
         "uglify-js": "^3.9.1",
         "uglifyjs-folder": "^1.5.2",
         "vinyl-buffer": "^1.0.1",
